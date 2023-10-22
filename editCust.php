@@ -2,37 +2,8 @@
 <html lang="en">
 
 <head>
-    <!-- Include your head content here -->
-    <!-- basic -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- mobile metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <!-- site metas -->
-    <title>Edit User</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- bootstrap css -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- style css -->
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Responsive-->
-    <link rel="stylesheet" href="css/responsive.css">
-    <!-- fevicon -->
-    <link rel="icon" href="images/fevicon.png" type="image/gif" />
-    <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
-    <!-- Tweaks for older IEs-->
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-    <!-- owl stylesheets -->
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+    <?php require_once 'head.php'; ?>
+    <title>Edit Customer</title>
 </head>
 
 <body class="main-layout">
@@ -41,85 +12,124 @@
     <div class="header_main">
         <?php require_once 'headerNav.php'; ?>
     </div>
-    <?php require_once 'adminSecondNav.php';?>
+    <?php require_once 'adminSecondNav.php';
+    require_once 'dbconnect.php';
+    ?>
 
     <?php
-    // Dummy data array
-    $users = [
-        [
-            'id' => 1,
-            'userTypeId' => 1,
-            'fName' => 'John',
-            'lName' => 'Doe',
-            'phoneNumber' => 1001,
-            'email' => 'john.doe@example.com',
-            'dateOfBirth' => '1990-05-15',
-        ],
-        [
-            'id' => 2,
-            'userTypeId' => 2,
-            'fName' => 'Jane',
-            'lName' => 'Smith',
-            'phoneNumber' => 1002,
-            'email' => 'jane.smith@example.com',
-            'dateOfBirth' => '1985-09-21',
-        ],
-        [
-            'id' => 3,
-            'userTypeId' => 1,
-            'fName' => 'Bob',
-            'lName' => 'Johnson',
-            'phoneNumber' => 1003,
-            'email' => 'bob.j@example.com',
-            'dateOfBirth' => '1978-12-08',
-        ],
-        // Add more dummy data as needed
-    ];
-
     // Check if user ID is set in the URL
-    if (isset($_GET['id'])) {
-        $userId = $_GET['id'];
-
-        // Find the user with the specified user ID
-        $selectedUser = null;
-        foreach ($users as $user) {
-            if ($user['id'] == $userId) {
-                $selectedUser = $user;
-                break;
+    if (isset($_GET['userId'])) {
+        $userId = $_GET['userId'];
+        $stmt = $con->prepare('SELECT * FROM VW_USER_TYPE WHERE userId = ?');
+        $stmt->execute([$userId]);
+        $selectedUser = $stmt->fetch(PDO::FETCH_ASSOC);
+        $fName = $selectedUser['fName'];
+        $lName = $selectedUser['lName'];
+        $email = $selectedUser['email'];
+        $phoneNumber = $selectedUser['phoneNumber'];
+        $dateOfBirth = $selectedUser['dateOfBirth'];
+        $userType = $selectedUser['userType'];
+        //Display the form for editing user details
+        $fNameOK = $lNameOK = $emailOK = $phoneNumberOK = $dateOfBirthOK = $userTypeOK = false;
+        $message = '';
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['fName'])) {
+                $fName = htmlspecialchars($_POST['fName']);
+                $fNameOK = true;
+            }
+            else{
+                $message .= 'First Name is required.<br>';
+            }
+            if (isset($_POST['lName'])) {
+                $lName = htmlspecialchars($_POST['lName']);
+                $lNameOK = true;
+            }
+            else{
+                $message .= 'Last Name is required.<br>';
+            }
+            if (isset($_POST['email'])) {
+                $email = htmlspecialchars($_POST['email']);
+                $emailOK = true;
+            }
+            else{
+                $message .= 'Email is required.<br>';
+            }
+            if (isset($_POST['phoneNumber'])) {
+                $phoneNumber = htmlspecialchars($_POST['phoneNumber']);
+                $phoneNumberOK = true;
+            }
+            else{
+                $message .= 'Phone Number is required.<br>';
+            }
+            if (isset($_POST['dateOfBirth'])) {
+                $dateOfBirth = htmlspecialchars($_POST['dateOfBirth']);
+                $dateOfBirthOK = true;
+            }
+            else{
+                $message .= 'Date of Birth is required.<br>';
+            }
+            if (isset($_POST['userType']) && $_POST['userType'] != 0) {
+                $userType = htmlspecialchars($_POST['userType']);
+                $userTypeOK = true;
+            }
+            else{
+                $message .= 'User Type is required.<br>';
+            }
+            if ($fNameOK && $lNameOK && $emailOK && $phoneNumberOK && $dateOfBirthOK && $userTypeOK) {
+                $stmt = $con->prepare('UPDATE USER_TABLE SET fName = ?, lName = ?, email = ?, phoneNumber = ?, dateOfBirth = ?, userTypeId = ? WHERE userId = ?');
+                $stmt->execute([$fName, $lName, $email, $phoneNumber, $dateOfBirth, $userType, $userId]);
+            }
+            else{
+                include './registration/errormsg.php';
             }
         }
-
-        // Display the form for editing user details
         if ($selectedUser) {
     ?>
             <div class="form-container">
-                <form action="viewCust.php" method="post">
+                <form action="editCust.php?userId= <?php print $selectedUser['userId'] ?>" method="post">
                     <h2>Edit User</h2>
-                    <input type="hidden" name="userId" value="<?= $selectedUser['id'] ?>">
+                    <input type="hidden" name="userId" value="<?= $selectedUser['userId'] ?>">
 
                     <div class="input-box">
-                        <label for="firstName">First Name:</label><br>
-                        <input type="text" name="firstName" value="<?= $selectedUser['fName'] ?>"><br>
+                        <label for="fName">First Name:</label><br>
+                        <input type="text" name="fName" value="<?= $fName ?>"><br>
                     </div>
 
                     <div class="input-box">
-                        <label for="lastName">Last Name:</label><br>
-                        <input type="text" name="lastName" value="<?= $selectedUser['lName'] ?>"><br>
+                        <label for="lName">Last Name:</label><br>
+                        <input type="text" name="lName" value="<?= $lName ?>"><br>
                     </div>
 
                     <div class="input-box">
                         <label for="phoneNumber">Phone Number:</label><br>
-                        <input type="tel" name="phoneNumber" value="<?= $selectedUser['phoneNumber'] ?>"><br>
+                        <input type="tel" name="phoneNumber" value="<?= $phoneNumber ?>"><br>
                     </div>
 
                     <div class="input-box">
                         <label for="email">Email:</label><br>
-                        <input type="email" name="email" value="<?= $selectedUser['email'] ?>"><br>
+                        <input type="email" name="email" value="<?= $email ?>"><br>
                     </div>
 
                     <div class="input-box">
                         <label for="dateOfBirth">Date of Birth:</label><br>
-                        <input type="date" name="dateOfBirth" value="<?= $selectedUser['dateOfBirth'] ?>">
+                        <input type="date" name="dateOfBirth" value="<?= $dateOfBirth ?>">
+                    </div>
+                    <div>
+                        <label for="userType">User Type:</label><br>
+                        <select name="userType">
+                        <option value="0">Select User Type</option>
+                            <?php
+                            $stmt2= $con->prepare('SELECT * FROM USER_TYPE');
+                            $stmt2->execute();
+                            
+                            while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+                                //make the current user type to be default
+                                $selected = ($row['userType'] == $userType) ? 'selected' : '';
+                                
+                                echo '<option value="' . $row['userTypeId'] . '" ' . $selected . '>' . $row['userType'] . '</option>';
+                            }
+                            ?>
+                        </select>
                     </div>
                     <div class="input-box button">
                         <!-- Submit button for login -->

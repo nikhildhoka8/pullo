@@ -34,47 +34,22 @@
     <div class="header_main">
         <?php require_once 'headerNav.php';?>
     </div>
-    <?php require_once 'adminSecondNav.php';?>
+    <?php require_once 'adminSecondNav.php';
+    require_once 'dbconnect.php';
+    ?>
     <h1>Admin View User</h1>
 
     <?php
     // Dummy data array
-    $users = [
-        [
-            'id' => 1,
-            'userTypeId' => 1,
-            'fName' => 'John',
-            'lName' => 'Doe',
-            'phoneNumber' => 1001,
-            'email' => 'john.doe@example.com',
-            'dateOfBirth' => '1990-05-15',
-        ],
-        [
-            'id' => 2,
-            'userTypeId' => 2,
-            'fName' => 'Jane',
-            'lName' => 'Smith',
-            'phoneNumber' => 1002,
-            'email' => 'jane.smith@example.com',
-            'dateOfBirth' => '1985-09-21',
-        ],
-        [
-            'id' => 3,
-            'userTypeId' => 1,
-            'fName' => 'Bob',
-            'lName' => 'Johnson',
-            'phoneNumber' => 1003,
-            'email' => 'bob.j@example.com',
-            'dateOfBirth' => '1978-12-08',
-        ],
-    ];
+    $stmt = $con->prepare('SELECT * FROM VW_USER_TYPE');
+    $stmt->execute();
     ?>
 
     <table>
         <thead>
             <tr>
                 <th>User ID</th>
-                <th>User Type ID</th>
+                <th>User Type</th>
                 <th>Name</th>
                 <th>Phone No. </th>
                 <th>Email</th>
@@ -84,17 +59,17 @@
         </thead>
         <tbody>
             <?php
-            foreach ($users as $user) {
+            while ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<tr>';
-                echo '<td>' . $user['id'] . '</td>';
-                echo '<td>' . $user['userTypeId'] . '</td>';
+                echo '<td>' . $user['userId'] . '</td>';
+                echo '<td>' . $user['userType'] . '</td>';
                 echo '<td>' . $user['fName'] . ' ' . $user['lName'] . '</td>';
                 echo '<td>' . $user['phoneNumber'] . '</td>';
                 echo '<td>' . $user['email'] . '</td>';
                 echo '<td>' . $user['dateOfBirth'] . '</td>';
                 
                 // New column with a link to editUser.php
-                echo '<td><a href="editCust.php?id=' . $user['id'] . '">Update</a></td>';
+                echo '<td><a href="editCust.php?userId=' . $user['userId'] . '">Update</a></td>';
                 
                 echo '</tr>';
             }
