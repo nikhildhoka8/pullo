@@ -36,7 +36,7 @@
    <body class="main-layout">
 	<!-- header section start -->
 	<div class="header_section header_main">
-		<?php include 'headerNav.php';?>
+		<?php require_once 'headerNav.php';?>
 	</div>
 	<!-- new collection section start -->
   <div class="collection_text">Collection</div>
@@ -86,7 +86,7 @@
     </div>
 	<!-- new collection section end -->
 	<!-- section footer start -->
-    <?php include 'footerNav.php';?>
+    <?php require_once 'footerNav.php';?>
 	<!-- section footer end -->
 
 

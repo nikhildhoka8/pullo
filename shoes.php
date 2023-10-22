@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <?php include 'head.php';?>
+    <?php require_once 'head.php';?>
     <title>Shoes</title>
     </head>
 
@@ -11,7 +11,7 @@
     <!-- header section start -->
     
     <div class="header_section header_main">
-        <?php include 'headerNav.php';?>
+        <?php require_once 'headerNav.php';?>
     </div>
     <!-- New Arrivals section start -->
     
@@ -134,7 +134,7 @@
     </div>
     <!-- New Arrivals section end -->
     <!-- section footer start -->
-    <?php include 'footerNav.php';?>
+    <?php require_once 'footerNav.php';?>
     <!-- section footer end -->
 
 

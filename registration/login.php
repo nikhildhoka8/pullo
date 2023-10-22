@@ -18,7 +18,8 @@
 
 <body>
     <?php
-    include 'util/funcs.php';
+    require_once 'util/funcs.php';
+    require_once '../dbconnect.php';
     // Initialize variables to store user input
     $email = $password = '';
     // Initialize variables to track input validity
@@ -56,8 +57,24 @@
             $passwordOK = true;
         }
         if($emailOK && $passwordOK){
-            $message = 'Login Successful';
-            include "successmsg.php";
+            session_start();
+            $stmt = $con->prepare("SELECT * FROM USER_TABLE WHERE email = ? and password = ?");
+            $stmt->execute([$email, $password]);
+            if($stmt->rowCount() == 0){
+                $message = 'Credentials do not match';
+                include "errormsg.php";
+            }
+            else{
+                $row = $stmt->fetch(PDO::FETCH_OBJ);
+                $userId = $row->userId;
+                $userType= $row->userTypeId;
+                $_SESSION['userId'] = $userId;
+                $_SESSION['userType'] = $userType;
+                $message = 'Login Successful';
+                include "successmsg.php";
+                Header("Location: ../index.php");
+            }
+            
         }
         else{
             $message = 'Login Failed';
@@ -79,7 +96,7 @@
             </div>
             <div class="input-box button">
                 <!-- Submit button for login -->
-                <input type="Submit" value="Login" disabled>
+                <input type="Submit" value="Login">
             </div>
         </form>
     </div>

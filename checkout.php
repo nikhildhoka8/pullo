@@ -39,7 +39,7 @@ session_start();
 
 <!-- Header section -->
 <div class="header_section header_main">
-    <?php include 'headerNav.php';?>
+    <?php require_once 'headerNav.php';?>
 </div>
 
 <!-- Checkout Form -->
@@ -63,7 +63,7 @@ session_start();
 </form>
 
 <!-- Footer section -->
-<?php include 'footerNav.php';?>
+<?php require_once 'footerNav.php';?>
 
 </body>
 </html>

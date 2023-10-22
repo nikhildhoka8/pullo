@@ -10,7 +10,7 @@
 <body class="main-layout">
     <!-- header section start -->
     <div class="header_main">
-        <?php include 'headerNav.php';?>
+        <?php require_once 'headerNav.php';?>
     </div>
 
     <div class="container">

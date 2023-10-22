@@ -1,3 +1,7 @@
+<?php
+session_start();
+// echo $_SESSION['userType'];
+?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -36,7 +40,7 @@
    <body class="main-layout">
 	<!-- header section start -->
 	<div class="header_section">
-		<?php include 'headerNav.php';?>
+		<?php require_once 'headerNav.php';?>
 		<div class="banner_section">
 			<div class="container-fluid">
 				<section class="slide-wrapper">
@@ -235,7 +239,7 @@
     </div>
    	<!-- contact section end -->
 	<!-- section footer start -->
-    <?php include 'footerNav.php';?>
+    <?php require_once 'footerNav.php';?>
 	<!-- section footer end -->
 
 

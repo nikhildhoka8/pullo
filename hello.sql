@@ -97,12 +97,11 @@ CREATE TABLE USER_TABLE (
     userTypeId INT,
     fName VARCHAR(150),
     lName VARCHAR(150),
-    phoneNumberId INT,
+    phoneNumberId INT(11),
     email VARCHAR(255),
     password VARCHAR(255),
     dateOfBirth DATE,
     FOREIGN KEY (userTypeId) REFERENCES USER_TYPE(userTypeId),
-    FOREIGN KEY (phoneNumberId) REFERENCES PHONE_NUMBER(phoneNumberId)
 );
 
 -- Create ORDER table

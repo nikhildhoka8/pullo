@@ -32,7 +32,7 @@
 <body class="main-layout">
     <!-- header section start -->
     <div class="header_main">
-        <?php include 'headerNav.php';?>
+        <?php require_once 'headerNav.php';?>
     </div>
     <?php require_once 'adminSecondNav.php';?>
     <h1>Admin View User</h1>
@@ -100,8 +100,8 @@
             }
             ?>
         </tbody>
-    </table>
+    </table><br>
 
-    <?php include 'footerNav.php';?>
+    <?php require_once 'footerNav.php';?>
 </body>
 </html>

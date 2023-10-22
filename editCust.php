@@ -39,7 +39,7 @@
 
     <!-- Header section -->
     <div class="header_main">
-        <?php include 'headerNav.php'; ?>
+        <?php require_once 'headerNav.php'; ?>
     </div>
     <?php require_once 'adminSecondNav.php';?>
 
@@ -136,7 +136,7 @@
     }
     ?>
 
-    <?php include 'footerNav.php'; ?>
+    <?php require_once 'footerNav.php'; ?>
 </body>
 
 </html>

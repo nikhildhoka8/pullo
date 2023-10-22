@@ -18,7 +18,8 @@
 
 <body>
     <?php
-    include 'util/funcs.php';
+    require_once 'util/funcs.php';
+    require_once '../dbconnect.php';
     // Initialize variables to store user input
     $fName = $lName = $email = $confirmEmail = $password = $confirmPassword = $phone = $dob = '';
     // Initialize variables to track input validity
@@ -60,13 +61,13 @@
             if (empty($_POST['fName'])) {
                 $message =  $message . "First Name is required.<br>";
             } else {
-                $name = htmlspecialchars($_POST['fName']);
+                $fName = htmlspecialchars($_POST['fName']);
                 $fNameOK = true;
             }
             if (empty($_POST['lName'])) {
                 $message =  $message . "Last Name is required.<br>";
             } else {
-                $name = htmlspecialchars($_POST['lName']);
+                $lName = htmlspecialchars($_POST['lName']);
                 $lNameOK = true;
             }
             // Check if password and confirm password fields are empty
@@ -122,11 +123,11 @@
 
         // If all inputs are valid, proceed to registration success page
         if ($fNameOK && $lNameOK && $emailOK && $confirm_emailOK && $passwordOK && $confirmPasswordOK && $phoneOK && $dobOK &&$TandC) {
-            // Store user's name and email in session
-            session_start();
-            $_SESSION['name'] = $name;
-            $_SESSION['email'] = $email;
+            $stmt = $con->prepare("INSERT INTO USER_TABLE (userTypeId, fName, lName, phoneNumber, email, password, dateOfBirth) VALUES (1, ?, ?, ?, ?, ?, ?)");
             // Redirect to the registration success page
+            echo 'First Name: ' . $fName . '<br>';
+            echo 'Last Name: ' . $lName . '<br>';
+            $stmt->execute([$fName, $lName, $phone, $email, $password, $dob]);
             $code = generateActivationCode(50);
             header('Location: login.php?activation_code='.$code);
             exit;

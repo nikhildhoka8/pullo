@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!-- Header section -->
 <div class="header_section header_main">
-    <?php include 'headerNav.php';?>
+    <?php require_once 'headerNav.php';?>
 </div>
 
 <!-- Cart Listing -->
@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 <!-- Footer section -->
-<?php include 'footerNav.php';?>
+<?php require_once 'footerNav.php';?>
 
 
 </body>
