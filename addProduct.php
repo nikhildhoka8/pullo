@@ -73,7 +73,7 @@
         if(empty($_FILES['productImageURL']['name'])){
             $message .= "Product Image is required <br>";
         }else{
-            echo $_FILES['productImageURL']['name'];
+            // echo $_FILES['productImageURL']['name'];
             $productImageURLOK = true;
 
         }
@@ -85,16 +85,16 @@
             $stmtFinal = $con->prepare("INSERT INTO PRODUCT (productName, productDescription, price, genderId, brandId, categoryId) VALUES (?, ?, ?, ?, ?, ?) ");
             if($stmtFinal->execute([$productName, $productDescription, $price, $gender, $brandName, $categoryName])){
                 $productId = $con->lastInsertId();
-                if (!empty($_FILES['productImageURL'])) {
+                if (isset($_FILES["productImageURL"]["name"])) {
                     // Define the directory where you want to save the image
-                    $uploadDirectory = './images/';
+                    $uploadDirectory = 'images/';
                 
                     // Create a unique filename based on the product ID, but keep the same file type
                     $imageFileName = 'product_' . $productId . '.' . pathinfo($_FILES['productImageURL']['name'], PATHINFO_EXTENSION);
                     
-                    
+                    echo $imageFileName;
                     // Move the uploaded image to the specified directory
-                    if (move_uploaded_file($_FILES['productImageURL']['name'], ( $uploadDirectory . $imageFileName))) {
+                    if (move_uploaded_file($_FILES["productImageURL"]["tmp_name"], ( $uploadDirectory . $imageFileName))) {
                         // Update the product record with the image filename
                         $stmtUpdateImage = $con->prepare("UPDATE PRODUCT SET productImageURL = :imageFileName WHERE productId = :productId");
                         $stmtUpdateImage->bindParam(':imageFileName', $imageFileName);
