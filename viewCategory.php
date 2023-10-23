@@ -42,7 +42,7 @@ require_once './registration/util/funcs.php';
             }
             ?>
         </tbody>
-    </table>
+    </table><br>
     <?php require_once 'footerNav.php';?>
 </body>
 </html>

@@ -41,7 +41,7 @@
         <form action="addCategory.php" method="post">
             <h2>Add Category</h2>
             <div class="input-box">
-                <label for="categoryName">Category Name</label><br>
+                <label for="categoryName">Category Name (*REQUIRED)</label><br>
                 <input type="text" name="categoryName" value="" ><br>
             </div>
             <div class="input-box button">

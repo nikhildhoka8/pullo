@@ -103,27 +103,27 @@
                     <h2>My Account</h2>
                     <label> Hello <?php echo $selectedUser['fName']. ' '. $selectedUser['lName'] . '!'  ?></label>
                     <div class="input-box">
-                        <label for="fName">First Name:</label><br>
+                        <label for="fName">First Name: (*REQUIRED)</label><br>
                         <input type="text" name="fName" value="<?= $fName ?>"><br>
                     </div>
 
                     <div class="input-box">
-                        <label for="lName">Last Name:</label><br>
+                        <label for="lName">Last Name: (*REQUIRED)</label><br>
                         <input type="text" name="lName" value="<?= $lName ?>"><br>
                     </div>
 
                     <div class="input-box">
-                        <label for="phoneNumber">Phone Number:</label><br>
+                        <label for="phoneNumber">Phone Number: (*REQUIRED)</label><br>
                         <input type="tel" name="phoneNumber" value="<?= $phoneNumber ?>"><br>
                     </div>
 
                     <div class="input-box">
-                        <label for="email">Email:</label><br>
+                        <label for="email">Email: (*REQUIRED)</label><br>
                         <input type="email" name="email" value="<?= $email ?>"><br>
                     </div>
                     
                     <div class="input-box">
-                        <label for="dateOfBirth">Date of Birth:</label><br>
+                        <label for="dateOfBirth">Date of Birth: (*REQUIRED)</label><br>
                         <input type="date" name="dateOfBirth" value="<?= $dateOfBirth ?>">
                     </div>
                     <div class="input-box button">

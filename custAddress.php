@@ -1,42 +1,27 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php require_once 'head.php';?>
     <title>User Address</title>
 </head>
-<?php
-    // Dummy data array for addresses
-    $addresses = [
-        [
-            'deliveryAddressId' => 1,
-            'userId' => 101,
-            'addressLine1' => '123 Main St',
-            'addressLine2' => '',
-            'addressLine3' => '',
-            'city' => 'New York',
-            'pincode' => '10001',
-            'state' => 'NY',
-            'country' => 'USA',
-        ],
-        [
-            'deliveryAddressId' => 2,
-            'userId' => 101,
-            'addressLine1' => '456 Oak St',
-            'addressLine2' => 'Suite 789',
-            'addressLine3' => '',
-            'city' => 'Los Angeles',
-            'pincode' => '90001',
-            'state' => 'CA',
-            'country' => 'USA',
-        ],
-        // Add more addresses as needed
-    ];
-    ?>
 <body>
 <div class="header_main">
         <?php require_once 'headerNav.php';?>
     </div>
-    <?php require_once 'custSecondNav.php';?>
+    <?php 
+    require_once 'custSecondNav.php';
+    require_once 'dbconnect.php';
+    // create a table to show all the addresses in the database
+    if(isset($_GET['message'])){
+        $message = $_GET['message'];
+        include './registration/successmsg.php';
+    }
+    $stmt = $con->prepare("SELECT * FROM VW_USER_DELIVERY_ADDRESS WHERE userId = ?");
+    $stmt->execute([$_SESSION['userId']]);
+    ?>
     <br>
     <div class="buttons clearfix">
             <div class="pull-right"><a class="btn btn-primary" href="./addAddress.php">Add Address</a>
@@ -45,8 +30,7 @@
         <table>
         <thead>
             <tr>
-                <th>Address ID</th>
-                <th>User ID</th>
+                <th>Number</th>
                 <th>Address Line 1</th>
                 <th>Address Line 2</th>
                 <th>Address Line 3</th>
@@ -59,19 +43,21 @@
         </thead>
         <tbody>
             <?php
-            foreach ($addresses as $address) {
+            $i = 1;
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<tr>';
-                echo '<td>' . $address['deliveryAddressId'] . '</td>';
-                echo '<td>' . $address['userId'] . '</td>';
-                echo '<td>' . $address['addressLine1'] . '</td>';
-                echo '<td>' . $address['addressLine2'] . '</td>';
-                echo '<td>' . $address['addressLine3'] . '</td>';
-                echo '<td>' . $address['city'] . '</td>';
-                echo '<td>' . $address['pincode'] . '</td>';
-                echo '<td>' . $address['state'] . '</td>';
-                echo '<td>' . $address['country'] . '</td>';
-                echo '<td><a href="updateAddress.php?id=' . $address['deliveryAddressId'] . '">Update</a></td>';
+                echo '<td>' . $i . '</td>';
+                echo '<td>' . $row['addressLine1'] . '</td>';
+                echo '<td>' . $row['addressLine2'] . '</td>';
+                echo '<td>' . $row['addressLine3'] . '</td>';
+                echo '<td>' . $row['city'] . '</td>';
+                echo '<td>' . $row['pincode'] . '</td>';
+                echo '<td>' . $row['state'] . '</td>';
+                echo '<td>' . $row['countryName'] . '</td>';
+                //Update and Delete buttons
+                echo '<td><a class="btn btn-primary" href="./updateAddress.php?deliveryAddressId=' . $row['deliveryAddressId'] . '">Update</a> <a class="btn btn-primary" href ="./deleteAddress.php?deliveryAddressId=' . $row['deliveryAddressId'] . '">Delete </a></td>';
                 echo '</tr>';
+                $i++;
             }
             ?>
         </tbody>

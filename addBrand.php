@@ -41,7 +41,7 @@
         <form action="addBrand.php" method="post">
             <h2>Add Brand</h2>
             <div class="input-box">
-                <label for="brandName">Brand Name</label><br>
+                <label for="brandName">Brand Name (*REQUIRED)</label><br>
                 <input type="text" name="brandName" value="" ><br>
             </div>
             <div class="input-box button">
