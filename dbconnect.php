@@ -17,7 +17,7 @@ $password = 'N0969dho';
 try {
     	$con = new PDO("mysql:host=$hostname;dbname=ndhoka_db", $username, $password);
     	/*** echo a message saying we have connected ***/
-    	echo 'Connected to database';
+    	// echo 'Connected to database';
     }
 catch(PDOException $e)
     {

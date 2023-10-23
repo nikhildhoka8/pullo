@@ -35,7 +35,7 @@ session_start();
             while ($size = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<tr>';
                 echo '<td>' . $size['sizeId'] . '</td>';
-                echo '<td>' . $size['sizeName'] . '</td>';
+                echo '<td>' . $size['size'] . '</td>';
                 echo '</tr>';
             }
             ?>
