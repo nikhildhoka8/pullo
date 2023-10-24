@@ -94,13 +94,13 @@ session_start();
                 
                     // Create a unique filename based on the product ID, but keep the same file type
                     $imageFileName = 'product_' . $productId . '.' . pathinfo($_FILES['productImageURL']['name'], PATHINFO_EXTENSION);
-                    
+                    $fullPath = $uploadDirectory . $imageFileName;
                     echo $imageFileName;
                     // Move the uploaded image to the specified directory
-                    if (move_uploaded_file($_FILES["productImageURL"]["tmp_name"], ( $uploadDirectory . $imageFileName))) {
+                    if (move_uploaded_file($_FILES["productImageURL"]["tmp_name"], $fullPath)) {
                         // Update the product record with the image filename
                         $stmtUpdateImage = $con->prepare("UPDATE PRODUCT SET productImageURL = :imageFileName WHERE productId = :productId");
-                        $stmtUpdateImage->bindParam(':imageFileName', $imageFileName);
+                        $stmtUpdateImage->bindParam(':imageFileName', $fullPath);
                         $stmtUpdateImage->bindParam(':productId', $productId);
                 
                         if ($stmtUpdateImage->execute()) {
