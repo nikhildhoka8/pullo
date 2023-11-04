@@ -113,6 +113,10 @@ session_start();
                     } 
                     else {
                         // Handle the case where moving the uploaded file fails
+                        //delete the entered product from the database
+                        $stmtDelete = $con->prepare("DELETE FROM PRODUCT WHERE productId = :productId");
+                        $stmtDelete->bindParam(':productId', $productId);
+                        $stmtDelete->execute();
                         echo "Error moving the uploaded file.";
                     }
                 }
