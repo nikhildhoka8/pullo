@@ -8,6 +8,19 @@ require_once './registration/util/funcs.php';
     <?php require_once 'head.php';?>
     <title>Categories</title>
 </head>
+<script type="text/javascript" language="javascript" class="init">
+        $(document).ready(function() {
+            $('#categories').DataTable(
+                {
+            searching: true,
+            ordering: true,
+            paging: true,
+            lengthMenu: [ [10, 20, 50, -1], [10, 20, 50, "All"] ]
+        }
+            );
+
+        });
+    </script>
 <body class="main-layout">
 <div class="header_main">
         <?php require_once 'headerNav.php';
@@ -25,7 +38,7 @@ require_once './registration/util/funcs.php';
     <div class="buttons clearfix">
             <div class="pull-right"><a class="btn btn-primary" href="./addCategory.php">Add Category</a>
             </div><br>
-    <table>
+    <table id="categories">
         <thead>
             <tr>
                 <th>Category ID</th>
@@ -37,7 +50,7 @@ require_once './registration/util/funcs.php';
             while ($category = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<tr>';
                 echo '<td>' . $category['categoryId'] . '</td>';
-                echo '<td>' . $category['categoryName'] . '</td>';                               
+                echo '<td>' . $category['categoryName'] . '</td>';
                 echo '</tr>';
             }
             ?>

@@ -5,8 +5,9 @@
         <a href="./addAdmin.php">Add Admin</a>
         <a href="./viewCategory.php">Categories</a>
         <a href="./viewBrand.php">Brands</a>
-        <a href="./addProduct.php">Add Product</a>
+        <a href="./viewProducts.php">Product</a>
+        <a href="./viewStock.php">Stock</a>
         <a href="./viewSize.php">Size</a>
-        <a href="./viewAllOrder.php">View All Orders</a>
+        <a href="./viewAllOrder.php">Orders</a>
         <a href="./logout.php">Logout</a>
     </div>

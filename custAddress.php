@@ -11,6 +11,19 @@ session_start();
 <div class="header_main">
         <?php require_once 'headerNav.php';?>
     </div>
+    <script type="text/javascript" language="javascript" class="init">
+        $(document).ready(function() {
+            $('#address').DataTable(
+                {
+            searching: true,
+            ordering: true,
+            paging: true,
+            lengthMenu: [ [10, 20, 50, -1], [10, 20, 50, "All"] ]
+        }
+            );
+
+        });
+    </script>
     <?php 
     require_once 'custSecondNav.php';
     require_once 'dbconnect.php';
@@ -25,9 +38,9 @@ session_start();
     <br>
     <div class="buttons clearfix">
             <div class="pull-right"><a class="btn btn-primary" href="./addAddress.php">Add Address</a>
-            </div>
+            </div><br>
         </div>
-        <table>
+        <table id = "address">
         <thead>
             <tr>
                 <th>Number</th>
