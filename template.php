@@ -14,7 +14,7 @@ require_once './registration/util/funcs.php';
         <?php require_once 'headerNav.php';?>
     </div>
     <?php
-    if(isset($_SESSION['user'])){
+    if(isset($_SESSION['userId'])){
         if($_SESSION['userType'] == '1'){
             require_once 'custSecondNav.php';
         }else if($_SESSION['userType'] == '2'){

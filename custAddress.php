@@ -19,7 +19,7 @@ session_start();
         $message = $_GET['message'];
         include './registration/successmsg.php';
     }
-    $stmt = $con->prepare("SELECT * FROM VW_USER_DELIVERY_ADDRESS WHERE userId = ?");
+    $stmt = $con->prepare("SELECT * FROM VW_USER_DELIVERY_ADDRESS WHERE userId = ? and activeStatus = TRUE");
     $stmt->execute([$_SESSION['userId']]);
     ?>
     <br>

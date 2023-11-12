@@ -1,5 +1,6 @@
 <div class="admin-secondary-nav">
         <a href="./userProfile.php">Profile</a>
+        <a href="./changePassword.php">Change Password</a>
         <a href="./viewCust.php">View Customer</a>
         <a href="./addAdmin.php">Add Admin</a>
         <a href="./viewCategory.php">Categories</a>

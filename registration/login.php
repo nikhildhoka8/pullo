@@ -58,7 +58,7 @@
         }
         if($emailOK && $passwordOK){
             session_start();
-            $stmt = $con->prepare("SELECT * FROM USER_TABLE WHERE email = ? and password = ?");
+            $stmt = $con->prepare("SELECT * FROM USER_TABLE WHERE email = ? and password = ? and activeStatus = TRUE");
             $stmt->execute([$email, $password]);
             if($stmt->rowCount() == 0){
                 $message = 'Credentials do not match';
@@ -72,7 +72,12 @@
                 $_SESSION['userType'] = $userType;
                 $message = 'Login Successful';
                 include "successmsg.php";
-                Header("Location: ../index.php");
+                if($userType == 1){
+                    Header("Location: ../index.php");
+                }
+                else{
+                    Header("Location: ../userProfile.php");
+                }
             }
             
         }
