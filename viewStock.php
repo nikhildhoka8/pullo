@@ -60,13 +60,14 @@ require_once './registration/util/funcs.php';
                 echo '<td>' . $stock['size'] . '</td>';
                 echo '<td>' . $stock['gender'] . '</td>';
                 echo '<td>' . $stock['stockQuantity'] . '</td>';
-                echo '<td>' . $stock['price'] . '</td>';
+                echo '<td>$' . $stock['price'] . '</td>';
                 echo '<td><a class="btn btn-primary" href="./updateStock.php?stockId=' . $stock['stockId'] . '">Update</a></td>';
                 echo '</tr>';
             }
             ?>
         </tbody>
     </table><br>
+    
     <?php require_once 'footerNav.php';?>
 </body>
 </html>

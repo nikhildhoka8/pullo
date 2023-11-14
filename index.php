@@ -69,7 +69,7 @@ session_start();
 							<h1 class="mens_text"><strong>Simply Stellar</strong></h1>
 							<p class="lorem_text">By Adidas Originals</p>
 							<button class="buy_bt" onclick="window.location.href='http://corsair2.cs.iupui.edu/~ndhoka/pullo/shoes.php'">Buy Now</button>
-							<button class="more_bt" onclick = "window.location.href='http://corsair2.cs.iupui.edu/~ndhoka/pullo/shoes.php'">See More</button>
+							<button class="more_bt" onclick = "window.location.href='./shoes.php'">See More</button>
 						</div>
 					</div>
 					<div class="col-sm-5">
@@ -158,7 +158,7 @@ session_start();
 	);
 	?>
 	<!-- New Arrivals section start -->
-    <div class="layout_padding gallery_section">
+    <!-- <div class="layout_padding gallery_section">
     	<div class="container">
     		<div class="row">
     			<?php
@@ -192,8 +192,7 @@ session_start();
     			<button class="buy_text" onclick="window.location.href='http://corsair2.cs.iupui.edu/~ndhoka/pullo/shoes.php'">Buy Now</button>
     		</div>
     	</div>
-    </div>
-   	<!-- New Arrivals section end -->
+    </div> -->
    	<!-- contact section start -->
     <div class="layout_padding contact_section">
     	<div class="container">

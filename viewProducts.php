@@ -21,7 +21,6 @@ require_once './registration/util/funcs.php';
                 [10, 20, 50, "All"]
             ]
         });
-
     });
 </script>
 
@@ -55,7 +54,7 @@ require_once './registration/util/funcs.php';
             </thead>
             <tbody>
                 <?php
-                $stmt = $con->prepare("SELECT DISTINCT productId, productName, productImageURL, productDescription, brand, category, price, gender FROM VW_STOCK WHERE activeStatus = TRUE;");
+                $stmt = $con->prepare("SELECT * FROM VW_PRODUCT WHERE activeStatus = TRUE;");
                 $stmt->execute();
                 while ($product = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo '<tr>';
@@ -64,14 +63,16 @@ require_once './registration/util/funcs.php';
                     echo '<td>' . $product['productDescription'] . '</td>';
                     echo '<td>' . $product['brand'] . '</td>';
                     echo '<td>' . $product['category'] . '</td>';
-                    echo '<td>' . $product['price'] . '</td>';
+                    echo '<td>$' . $product['price'] . '</td>';
                     echo '<td>' . $product['gender'] .  '</td>';
-                    echo '<td><a class="btn btn-primary" href="./updateProduct.php?productId=' . $product['productId'] . '">Update</a> <a class="btn btn-primary" href="./deleteProduct.php?productId=' . $product['productId'] . '">Delete</a></td>';
+                    echo '<td><a class="btn btn-primary" href="./addProduct.php?productId=' . $product['productId'] . '">Update</a> <a class="btn btn-primary" href="./deleteProduct.php?productId=' . $product['productId'] . '">Delete</a></td>';
                     echo '</tr>';
                 }
                 ?>
             </tbody>
         </table><br>
+
+
 
         <?php require_once 'footerNav.php'; ?>
 </body>

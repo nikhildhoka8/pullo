@@ -1,55 +1,67 @@
+<?php
+session_start();
+require_once 'dbconnect.php';
+require_once './registration/util/funcs.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php require_once 'head.php';?>
-    <title>
-        Order History
-    </title>
+    <title>Order History</title>
 </head>
+<script type="text/javascript" language="javascript" class="init">
+        $(document).ready(function() {
+            $('#orderHistory').DataTable(
+                {
+            searching: true,
+            ordering: true,
+            paging: true,
+            lengthMenu: [ [10, 20, 50, -1], [10, 20, 50, "All"] ]
+        }
+            );
+
+        });
+    </script>
 <body class="main-layout">
-	<!-- header section start -->
-	<div class=" header_main">
-		<?php require_once 'headerNav.php';?>
-	</div>
-    <?php require_once 'custSecondNav.php';?>
+<div class="header_main">
+        <?php require_once 'headerNav.php';?>
+    </div>
     <?php
-$orderHistory = array(
-    array('id' => 1, 'name' => 'Yeezy Boost 350 V2', 'image' => './images/air-jordan-1-dior.png', 'qty' => 2, 'status' => 'Shipped', 'total' => '$300.00'),
-    array('id' => 2, 'name' => 'Air Jordan 1 Retro High', 'image' => 'jordan1.jpg', 'qty' => 1, 'status' => 'Delivered', 'total' => '$150.00'),
-    // Add more dummy data as needed
-);
-?>
-    <h1>Order History</h1>
-    <table>
+    require_once 'custSecondNav.php';
+    if(isset($_GET['message'])){
+        $message = $_GET['message'];
+        require_once './registration/successmsg.php';
+    }
+    ?>
+    <table id="orderHistory">
         <thead>
             <tr>
-                <th>Order ID</th>
-                <th>Prodct Name </th>
+                <th>Product Name</th>
                 <th>Image</th>
-                <th>Qty</th>
-                <th>Status</th> 
-                <th>Total</th>
-                <th> </th>
+                <th>Size</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            foreach ($orderHistory as $order) {
+            $stmt = $con->prepare("SELECT * FROM VW_ORDERHISTORY where userId = :userId");
+            $stmt->bindParam(':userId', $_SESSION['userId']);
+            $stmt->execute();
+            while ($order = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<tr>';
-                echo '<td>' . $order['id'] . '</td>';
-                echo '<td>' . $order['name'] . '</td>';
-                echo '<td><img src="' . $order['image'] . '" alt="Product Image" style="width: 100px; height: auto;"></td>';
-                echo '<td>' . $order['qty'] . '</td>';
-                echo '<td>' . $order['status'] . '</td>';
-                echo '<td>' . $order['total'] . '</td>';
-                echo '<td><a href="viewOrderDetail.php?id=' . $order['id'] . '" class="view-button"><span class="eye-icon">&#128065;</span> View</a></td>';
+                echo '<td>' . $order['productName'] . '</td>';
+                echo '<td><img src="' . $order['productImageURL'] . '" width="100" height="100"></td>';
+                echo '<td>' . $order['size'] . '</td>';
+                echo '<td>' . $order['quantity'] . '</td>';
+                echo '<td>' . $order['price'] . '</td>';
+                echo '<td>' . $order['orderStatus'] . '</td>';
                 echo '</tr>';
             }
             ?>
         </tbody>
-    </table><br>
-
-
-<?php require_once 'footerNav.php';?>
+    </table>
+    <?php require_once 'footerNav.php';?>
 </body>
 </html>

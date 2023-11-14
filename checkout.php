@@ -1,69 +1,73 @@
 <?php
 session_start();
+require_once 'dbconnect.php';
+require_once './registration/util/funcs.php';
+// 1. Check if the user is logged in. If not, redirect to error.php with a message
+if (!isset($_SESSION['userId']) || $_SERVER['REQUEST_METHOD'] != 'POST') {
+    header('Location: error.php?message=Invalid Request!');
+    exit();
+}
+//2. get all the details of the cart and add it to the ORDER_TABLE. Also add the Shipping address ID and the Billing Address ID. Also add the payment method ID. Also add the user ID. Also add the order date. set the default statusId to 1
+$stmt = $con->prepare("SELECT * FROM CART WHERE userId = ?");
+$stmt->execute([$_SESSION['userId']]);
+$cart = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$deliveryAddressId = $_POST['shippingAdd'];
+$billingAddressId = $_POST['billingAdd'];
+$paymentMethodId = $_POST['paymentMethod'];
+$userId = $_SESSION['userId'];
+$orderDate = date("Y-m-d");
+$statusId = 1;
+
+//Log all the details for the Payment Details and then get the PaymentDetailId, and the total amount
+$amount = 0;
+foreach ($cart as $item) {
+    $productId = $item['productId'];
+    $quantity = $item['quantity'];
+    $stmt = $con->prepare("SELECT * FROM PRODUCT WHERE productId = ?");
+    $stmt->execute([$productId]);
+    $product = $stmt->fetch(PDO::FETCH_ASSOC);
+    $price = $product['price'];
+    $amount += $price * $quantity;
+}
+$stmt = $con->prepare("INSERT INTO PAYMENT_DETAIL (paymentMethodId, paymentDate, paymentStatusId, amount) VALUES (:paymentMethodId, :paymentDate, 1, :amount)");
+$stmt->bindParam(':paymentMethodId', $paymentMethodId);
+$stmt->bindParam(':paymentDate', $orderDate);
+$stmt->bindParam(':amount', $amount);
+$stmt->execute();
+$paymentDetailId = $con->lastInsertId("paymentDetailId");
+
+//3. Loop through the items in the cart and then add it to the ORDER_TABLE. Also add the size of the product
+foreach ($cart as $item) {
+    $productId = $item['productId'];
+    $sizeId = $item['sizeId'];
+    $quantity = $item['quantity'];
+    $stmt = $con->prepare("INSERT INTO ORDER_TABLE (productId, sizeId, quantity, deliveryAddressId, billingAddressId, paymentDetailId, userId, orderDate, statusId) VALUES (:productId, :sizeId, :quantity, :deliveryAddressId, :billingAddressId, :paymentDetailId, :userId, :orderDate, :statusId)");
+    $stmt->bindParam(':productId', $productId);
+    $stmt->bindParam(':sizeId', $sizeId);
+    $stmt->bindParam(':quantity', $quantity);
+    $stmt->bindParam(':deliveryAddressId', $deliveryAddressId);
+    $stmt->bindParam(':billingAddressId', $billingAddressId);
+    $stmt->bindParam(':paymentDetailId', $paymentDetailId);
+    $stmt->bindParam(':userId', $userId);
+    $stmt->bindParam(':orderDate', $orderDate);
+    $stmt->bindParam(':statusId', $statusId);
+    $stmt->execute();
+}
+//4. Delete all the items from the cart
+$stmt = $con->prepare("DELETE FROM CART WHERE userId = ?");
+$stmt->execute([$_SESSION['userId']]);
+//Delete the Items from the STOCK table
+foreach ($cart as $item) {
+    $productId = $item['productId'];
+    $sizeId = $item['sizeId'];
+    $quantity = $item['quantity'];
+    $stmt = $con->prepare("UPDATE STOCK SET quantity = quantity - :quantity WHERE productId = :productId AND sizeId = :sizeId");
+    $stmt->bindParam(':productId', $productId);
+    $stmt->bindParam(':sizeId', $sizeId);
+    $stmt->bindParam(':quantity', $quantity);
+    $stmt->execute();
+}
+//5. Redirect to the orderHistory.php page with a message
+header('Location: orderHistory.php?message=Order placed successfully.');
+
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <!-- mobile metas -->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-      <!-- site metas -->
-      <title>Checkout</title>
-      <meta name="keywords" content="">
-      <meta name="description" content="">
-      <meta name="author" content="">
-      <!-- bootstrap css -->
-      <link rel="stylesheet" href="css/bootstrap.min.css">
-      <!-- style css -->
-      <link rel="stylesheet" href="css/style.css">
-      <!-- Responsive-->
-      <link rel="stylesheet" href="css/responsive.css">
-      <!-- fevicon -->
-      <link rel="icon" href="images/fevicon.png" type="image/gif" />
-      <!-- Scrollbar Custom CSS -->
-      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
-      <!-- Tweaks for older IEs-->
-      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-      <!-- owl stylesheets --> 
-      <link rel="stylesheet" href="css/owl.carousel.min.css">
-      <link rel="stylesheet" href="css/owl.theme.default.min.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-      <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
-    
-</head>
-<body class="main-layout">
-
-<!-- Header section -->
-<div class="header_section header_main">
-    <?php require_once 'headerNav.php';?>
-</div>
-
-<!-- Checkout Form -->
-<div class="collection_text">Checkout</div>
-
-<form action="process_order.php" method="post">
-    <!-- Add fields for shipping information (e.g., name, address, etc.) -->
-    <label for="name">Name: Nikhil</label><br>
-
-    <label for="address">Address:</label><br>
-    <textarea id="address" name="address" required></textarea><br>
-    <!-- Show Total -->
-    <label>Total:<?php 
-    $total = 0;
-    foreach ($_SESSION['cart'] as $key => $value) {
-        $total += $value['price'] * $value['quantity'];
-    }
-    print $total?></label><br>
-    <!-- Button to proceed with the checkout -->
-    <button type="submit">Proceed to Payment</button>
-</form>
-
-<!-- Footer section -->
-<?php require_once 'footerNav.php';?>
-
-</body>
-</html>

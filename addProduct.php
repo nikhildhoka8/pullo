@@ -19,7 +19,7 @@ session_start();
     require_once 'dbconnect.php';
     //check user input before entering into database. All fields are required
     $productName = $productDescription = $price  = $gender = $productImageURL = $brandName = $categoryName = "";
-    $productNameOK = $productDescriptionOK = $priceOK = $genderOK = $productImageURLOK = $brandNameOK = $categoryNameOK = false;
+    $productNameOK = $productDescriptionOK = $priceOK = $genderOK = $productImageURLOK = $brandNameOK = $categoryNameOK = false;  
     $message = "";
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(empty($_POST['productName'])){

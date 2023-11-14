@@ -1,154 +1,182 @@
-<!-- cart.php -->
 <?php
 session_start();
-
-// Dummy product data for demonstration
-$products = array(
-    array('name' => 'Yeezy Boost 350 V2 Black Red', 'price' => 50, 'quantity' => 2),
-    array('name' => 'Jordan Off White', 'price' => 75, 'quantity' => 1)
-);
-
-// Initialize the cart if not already set
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = $products;
-}
-
-// Function to update quantity
-function updateQuantity($key, $quantity)
-{
-    $_SESSION['cart'][$key]['quantity'] = $quantity;
-}
-
-// Function to remove item
-function removeItem($key)
-{
-    unset($_SESSION['cart'][$key]);
+require_once 'dbconnect.php';
+require_once './registration/util/funcs.php';
+if (!isset($_SESSION['userId'])) {
+    header('Location: error.php?message=You are not logged in!');
+    exit();
 }
 
 ?>
-<?php
-// Handle form submissions
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['update'])) {
-        $key = $_POST['update'];
-        $quantity = $_POST['quantity'][$key];
-        updateQuantity($key, $quantity);
-    } elseif (isset($_POST['remove'])) {
-        $key = $_POST['remove'];
-        removeItem($key);
-    } elseif (isset($_POST['checkout'])) {
-        // Implement your checkout logic here
-        // Redirect to the checkout page or handle as needed
-        header('Location: checkout.php');
-        exit();
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <!-- Include your head content here -->
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        .quantity-input {
-            width: 40px;
-        }
-    </style>
-    <!-- basic -->
-    <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <!-- mobile metas -->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-      <!-- site metas -->
-      <title>Collection</title>
-      <meta name="keywords" content="">
-      <meta name="description" content="">
-      <meta name="author" content="">
-      <!-- bootstrap css -->
-      <link rel="stylesheet" href="css/bootstrap.min.css">
-      <!-- style css -->
-      <link rel="stylesheet" href="css/style.css">
-      <!-- Responsive-->
-      <link rel="stylesheet" href="css/responsive.css">
-      <!-- fevicon -->
-      <link rel="icon" href="images/fevicon.png" type="image/gif" />
-      <!-- Scrollbar Custom CSS -->
-      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
-      <!-- Tweaks for older IEs-->
-      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-      <!-- owl stylesheets --> 
-      <link rel="stylesheet" href="css/owl.carousel.min.css">
-      <link rel="stylesheet" href="css/owl.theme.default.min.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-      <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+    <?php require_once 'head.php'; ?>
+    <title>Cart</title>
 </head>
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+        $('#').DataTable({
+            searching: true,
+            ordering: true,
+            paging: true,
+            lengthMenu: [
+                [10, 20, 50, -1],
+                [10, 20, 50, "All"]
+            ]
+        });
+    });
+</script>
+
+
 <body class="main-layout">
-
-<!-- Header section -->
-<div class="header_section header_main">
-    <?php require_once 'headerNav.php';?>
-</div>
-
-<!-- Cart Listing -->
-<div class="collection_text">Shopping Cart</div>
-
-<form method="post" action="cart.php">
-
-    <table>
-        <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th>Action</th>
-        </tr>
-
-        <?php foreach ($_SESSION['cart'] as $key => $product) : ?>
-            <tr>
-                <td><?= $product['name']; ?></td>
-                <td>$<?= $product['price']; ?></td>
-                <td>
-                    <input class="quantity-input" type="number" name="quantity[<?= $key; ?>]"
-                           value="<?= $product['quantity']; ?>" min="1">
-                </td>
-                <td>$<?= $product['price'] * $product['quantity']; ?></td>
-                <td>
-                    <button type="submit" name="update" value="<?= $key; ?>">Update</button>
-                    <button type="submit" name="remove" value="<?= $key; ?>">Remove</button>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
-
-    <div>
-        <button type="submit" name="checkout">Proceed to Checkout</button><br>
+    <div class="header_main">
+        <?php require_once 'headerNav.php';
+        if (isset($_GET['message'])) {
+            $message = $_GET['message'];
+            include './registration/errormsg.php';
+        }
+        ?>
     </div>
-</form>
+    <?php
+    if (isset($_SESSION['userId'])) {
+        if ($_SESSION['userType'] == '1') {
+            require_once 'custSecondNav.php';
+        } else if ($_SESSION['userType'] == '2') {
+            require_once 'adminSecondNav.php';
+        }
+    }
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        if (isset($_GET['message'])) {
+            $message = $_GET['message'];
+            require_once './registration/successmsg.php';
+        }
+    }
+    ?>
+    <br>
+    <?php
+    //check if the user has any items in the cart
+    $stmt = $con->prepare("SELECT * FROM VW_CART where userId = :userId");
+    $stmt->bindParam(':userId', $_SESSION['userId']);
+    $stmt->execute();
+    $cartRow = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$cartRow) {
+        header('Location: error.php?message=You have no items in your cart!');
+        exit();
+    }
+    ?>
+    <table id="cart">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Product Image</th>
+                <th>Product Description</th>
+                <th>Price</th>
+                <th>Size</th>
+                <th>Quantity</th>
+                <th>Brand Name</th>
+                <th>Category Name</th>
+                <th>Gender</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $stmt = $con->prepare("SELECT * FROM VW_CART where userId = :userId");
+            $stmt->bindParam(':userId', $_SESSION['userId']);
+            $stmt->execute();
+            while ($cartRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo '<tr>';
+                echo '<td>' . $cartRow['productName'] . '</td>';
+                echo '<td><img src="' . $cartRow['productImageURL'] . '" width="100" height="100"></td>';
+                echo '<td>' . $cartRow['productDescription'] . '</td>';
+                echo '<td>$' . $cartRow['price'] . '</td>';
+                //find the size from the sizeId from the SIZE Table
+                $stmt2 = $con->prepare("SELECT size FROM SIZE WHERE sizeId = :sizeId");
+                $stmt2->bindParam(':sizeId', $cartRow['sizeId']);
+                $stmt2->execute();
+                $size = $stmt2->fetch(PDO::FETCH_ASSOC);
+                echo '<td>' . $size['size'] . '</td>';
+                echo '<td>' . $cartRow['quantity'] . '</td>';
+                echo '<td>' . $cartRow['brandName'] . '</td>';
+                echo '<td>' . $cartRow['categoryName'] . '</td>';
+                echo '<td>' . $cartRow['genderName'] . '</td>';
+                echo '<td><a class="btn btn-primary" href="./deleteCart.php?cartId=' . $cartRow['cartId'] . '">Delete</a></td>';
+                echo '</tr>';
+            }
+            //make a row for the total price
+            $stmt = $con->prepare("SELECT SUM(price*quantity) as total FROM VW_CART where userId = :userId");
+            $stmt->bindParam(':userId', $_SESSION['userId']);
+            $stmt->execute();
+            $total = $stmt->fetch(PDO::FETCH_ASSOC);
+            echo '<tr>';
+            echo '<td colspan="3" style="text-align: right;">Total</td>';
+            echo '<td>$' . $total['total'] . '</td>';
+            echo '</tr>';
+
+            ?>
+        </tbody>
+    </table>
+    <!--add an option to choose the shipping and billing Address-->
+
+    <div class="form-container">
 
 
+        <form action="checkout.php" method="post">
+            <h2>Shipping Details</h2><br>
+            <div class="buttons clearfix">
+                <div class="pull-left"><a class="btn btn-primary" href="./addAddress.php">Add Address</a>
+                </div><br>
+            </div>
+            <div class="input-box">
+                <label for="shippingAdd">Shipping Address (*REQUIRED)</label><br>
+                <select name="shippingAdd" required>
+                    <option value="">Select Shipping Address</option>
+                    <?php
+                    $stmtBrand = $con->prepare("SELECT * FROM DELIVERY_ADDRESS WHERE userId = :userId");
+                    $stmtBrand->bindParam(':userId', $_SESSION['userId']);
+                    $stmtBrand->execute();
+                    while ($address = $stmtBrand->fetch(PDO::FETCH_ASSOC)) {
+                        echo "<option value='" . $address['deliveryAddressId'] . "'>" . $address['addressLine1'] . ', ' .  $address['addressLine2'] . ', ' . $address['city'] . "</option>";
+                    }
+                    ?>
+                </select><br>
+            </div>
+            <div class="input-box">
+                <label for="billingAdd">Billing Address (*REQUIRED)</label><br>
+                <select name="billingAdd" required>
+                    <option value="">Select Billing Address</option>
+                    <?php
+                    $stmtBrand = $con->prepare("SELECT * FROM DELIVERY_ADDRESS WHERE userId = :userId");
+                    $stmtBrand->bindParam(':userId', $_SESSION['userId']);
+                    $stmtBrand->execute();
+                    while ($address = $stmtBrand->fetch(PDO::FETCH_ASSOC)) {
+                        echo "<option value='" . $address['deliveryAddressId'] . "'>" . $address['addressLine1'] . ', ' .  $address['addressLine2'] . ', ' . $address['city'] . "</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="input-box">
+                <label for="paymentMethod">Payment Method (*REQUIRED)</label><br>
+                <select name="paymentMethod" required>
+                    <option value="">Select Payment Method</option>
+                    <?php
+                    $stmt = $con->prepare("SELECT * FROM PAYMENT_METHOD");
+                    $stmt->execute();
+                    while ($paymentMethod = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        echo "<option value='" . $paymentMethod['paymentMethodId'] . "'>" . $paymentMethod['paymentMethod'] . "</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="input-box button">
+                <input type="submit" value="Checkout">
+            </div>
+        </form>
+    </div>
 
-<!-- Footer section -->
-<?php require_once 'footerNav.php';?>
-
-
+    <?php require_once 'footerNav.php'; ?>
 </body>
+
 </html>

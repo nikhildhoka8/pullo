@@ -19,6 +19,7 @@ require_once './registration/util/funcs.php';
 require_once 'adminSecondNav.php';
 $productName = $size = $quantity = $productId = "";
 $productNameOK = $sizeOK = $quantityOK = false;
+
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $message = '';
     if (isset($_POST['productName']) && !empty($_POST['productName'])) {
