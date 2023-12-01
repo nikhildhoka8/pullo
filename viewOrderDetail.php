@@ -1,3 +1,7 @@
+<?php
+session_start();
+require_once './registration/util/funcs.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +24,20 @@
             <div class="pull-right"><a class="btn btn-primary" href="./orderHistory.php">Back</a>
             </div>
         </div>
-
+        <?php
+        require_once 'dbconnect.php';
+        if(isset($_GET['orderId'])){
+            $orderId = $_GET['orderId'];
+        }
+        else{
+            header('Location: error.php?message=Invalid Access');
+            exit();
+        }
+        $stmt = $con->prepare("SELECT * FROM VW_ORDERHISTORY WHERE orderId = :orderId");
+        $stmt->bindParam(':orderId', $_GET['orderId']);
+        $stmt->execute();
+        $order = $stmt->fetch(PDO::FETCH_ASSOC);
+        ?>
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
@@ -29,11 +46,17 @@
             </thead>
             <tbody>
                 <tr>
-                    <td style="width: 50%;" class="text-left"> <b>Order ID:</b> #214521
+                    <td style="width: 50%;" class="text-left"> <b>Order ID:</b> #<?php echo $order['orderId']; ?>
                         <br>
-                        <b>Date Added:</b> 20/06/2016
+                        <b>Date Added:</b> <?php echo $order['orderDate']; ?>
                     </td>
-                    <td style="width: 50%;" class="text-left"> <b>Payment Method:</b> Cash On Delivery
+                    <?php
+                    $stmt = $con->prepare("SELECT paymentMethod FROM PAYMENT_METHOD WHERE paymentMethodId = :paymentMethodId");
+                    $stmt->bindParam(':paymentMethodId', $order['paymentMethodId']);
+                    $stmt->execute();
+                    $paymentMethod = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+                    <td style="width: 50%;" class="text-left"> <b>Payment Method:</b> <?php echo $paymentMethod['paymentMethod']; ?>
                         <br>
                         <b>Shipping Method:</b> Flat Shipping Rate
                     </td>
@@ -47,19 +70,53 @@
                     <td style="width: 50%; vertical-align: top;" class="text-left">Shipping Address</td>
                 </tr>
             </thead>
+            <?php
+            //get the user from the userId on the order
+            $stmt = $con->prepare("SELECT * FROM USER_TABLE WHERE userId = :userId");
+            $stmt->bindParam(':userId', $order['userId']);
+            $stmt->execute();
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            ?>
             <tbody>
                 <tr>
-                    <td class="text-left">Jhone Cary
-                        <br>Central Square
-                        <br>22 Hoi Wing Road
-                        <br>New Delhi
-                        <br>India
+                    <td class="text-left"><?php echo $user['fName'] . ' ' . $user['lName']; ?>
+                    <?php
+                    // get the billing Address from the Billing address Id on the order
+                    $stmt = $con->prepare("SELECT * FROM VW_USER_DELIVERY_ADDRESS WHERE deliveryAddressId = :addressId");
+                    $stmt->bindParam(':addressId', $order['billingAddressId']);
+                    $stmt->execute();
+                    $billingAddress = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    ?>
+                        <br><?php echo $billingAddress['addressLine1']; ?>
+                        <br><?php echo $billingAddress['addressLine2']; ?>
+                        <?php
+                        if(!empty($billingAddress['addressLine3'])){
+                            echo '<br>' . $billingAddress['addressLine3'];
+                        }
+                        ?>
+                        <br><?php echo $billingAddress['city']; ?>
+                        <br><?php echo $billingAddress['state'] . ' - ' . $billingAddress['pincode']; ?>
+                        <br><?php echo $billingAddress['countryName']; ?>
                     </td>
-                    <td class="text-left">Jhone Cary
-                        <br>Central Square
-                        <br>22 Hoi Wing Road
-                        <br>New Delhi
-                        <br>India
+                    <td class="text-left"><?php echo $user['fName'] . ' ' . $user['lName']; ?>
+                    <?php
+                    // get the shipping Address from the Shipping address Id on the order
+                    $stmt = $con->prepare("SELECT * FROM VW_USER_DELIVERY_ADDRESS WHERE deliveryAddressId = :addressId");
+                    $stmt->bindParam(':addressId', $order['deliveryAddressId']);
+                    $stmt->execute();
+                    $shippingAddress = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+                        <br><?php echo $shippingAddress['addressLine1']; ?>
+                        <br><?php echo $shippingAddress['addressLine2']; ?>
+                        <?php
+                        if(!empty($shippingAddress['addressLine3'])){
+                            echo '<br>' . $shippingAddress['addressLine3'];
+                        }
+                        ?>
+                        <br><?php echo $shippingAddress['city']; ?>
+                        <br><?php echo $shippingAddress['state'] . ' - ' . $shippingAddress['pincode']; ?>
+                        <br><?php echo $shippingAddress['countryName']; ?>
                     </td>
                 </tr>
             </tbody>
@@ -69,52 +126,34 @@
                 <thead>
                     <tr>
                         <td class="text-left">Product Name</td>
-                        <td class="text-left">Model</td>
+                        <td class="text-left">Product Image</td>
                         <td class="text-right">Quantity</td>
+                        <td class="text-left">Brand</td>
+                        <td class="text-left">Category</td>
+                        <td class="text-left">Size</td>
+                        <td class="text-left">Gender</td>
                         <td class="text-right">Price</td>
-                        <td class="text-right">Total</td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="text-left">iPhone5 </td>
-                        <td class="text-left">product 11</td>
-                        <td class="text-right">1</td>
-                        <td class="text-right">$123.20</td>
-                        <td class="text-right">$123.20</td>
+                        <td class="text-left"><?php print $order['productName'] ?> </td>
+                        <td class="text-left"><img src="<?php print $order['productImageURL'] ?>" height = "50px" width="50px"></td>
+                        <td class="text-right"><?php print $order['quantity'] ?></td>
+                        <td class="text-left"><?php print $order['brandName'] ?></td>
+                        <td class="text-left"><?php print $order['categoryName'] ?></td>
+                        <td class="text-left"><?php print $order['size'] ?></td>
+                        <td class="text-left"><?php print $order['genderName'] ?></td>
+                        <td class="text-right"><?php print '$' . $order['price'] ?></td>
                     </tr>
 
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="3"></td>
-                        <td class="text-right"><b>Sub-Total</b>
-                        </td>
-                        <td class="text-right">$101.00</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"></td>
-                        <td class="text-right"><b>Flat Shipping Rate</b>
-                        </td>
-                        <td class="text-right">$5.00</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"></td>
-                        <td class="text-right"><b>Eco Tax (-2.00)</b>
-                        </td>
-                        <td class="text-right">$6.00</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"></td>
-                        <td class="text-right"><b>VAT (20%)</b>
-                        </td>
-                        <td class="text-right">$21.20</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"></td>
+                        <td colspan="6"></td>
                         <td class="text-right"><b>Total</b>
                         </td>
-                        <td class="text-right">$133.20</td>
+                        <td class="text-right"><?php print '$' . $order['price'] ?></td>
                     </tr>
                 </tfoot>
             </table>
@@ -128,17 +167,23 @@
                 </tr>
             </thead>
             <tbody>
+                <?php
+                if(isset($order['deliveryDate'])){
+                    echo '<tr>';
+                    echo '<td class="text-left">' . $order['deliveryDate'] . '</td>';
+                    echo '<td class="text-left">Delivered</td>';
+                    echo '</tr>';
+                }
+                if(isset($order['shipDate'])){
+                    echo '<tr>';
+                    echo '<td class="text-left">' . $order['shipDate'] . '</td>';
+                    echo '<td class="text-left">Shipped</td>';
+                    echo '</tr>';
+                }
+                ?>
                 <tr>
-                    <td class="text-left">20/06/2016</td>
-                    <td class="text-left">Processing</td>
-                </tr>
-                <tr>
-                    <td class="text-left">21/06/2016</td>
-                    <td class="text-left">Shipped</td>
-                </tr>
-                <tr>
-                    <td class="text-left">24/06/2016</td>
-                    <td class="text-left">Complete</td>
+                    <td class="text-left"><?php print$order['orderDate'] ?></td>
+                    <td class="text-left">Received</td>
                 </tr>
             </tbody>
         </table>

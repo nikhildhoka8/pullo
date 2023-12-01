@@ -7,6 +7,21 @@
     require_once 'head.php'; 
     ?>
     <title>Shoes</title>
+    <style>
+        .new_text {
+            padding-top: 100px;
+        }
+        .best_shoes {
+            /* make the box bigger by making it of the lenght as much as it its contents*/
+            height: 100%;
+            width: 100%;
+            border: 1px solid black;
+            padding: 10px;
+        }
+        .input-box {
+            margin-bottom: 200px !important;
+        }
+    </style>
 </head>
 
 <!-- body -->
@@ -42,7 +57,7 @@
             echo '<div class="col-sm-4">';
             echo '<div class="best_shoes">';
             echo '<p class="best_text">' . $stockRow['productName'] . '</p>';
-            echo '<div class="shoes_icon"><img src="' . $stockRow['productImageURL'] . '"></div>';
+            echo '<div class="shoes_icon"><img src="' . $stockRow['productImageURL'] . '" height="330px" width="230px"s></div>';
             echo '<div class="star_text">';
             echo '<div class="left_part">';
             echo '<ul>';
@@ -62,7 +77,7 @@
             echo '<div class="input-box">';
             echo '<label for="size">Select Size: (*REQUIRED)</label><br>';
             
-            echo '<select name="size" required>';
+            echo '<select name="size" class="nice-select" hidden required>';
             echo '<option value="">Select Size</option>';
             $stmtSize = $con->prepare("SELECT DISTINCT SIZE.sizeId, SIZE.size FROM STOCK JOIN SIZE ON STOCK.sizeId = SIZE.sizeId WHERE STOCK.productId = ?;");
             $stmtSize->bindParam(1, $stockRow['productId']);

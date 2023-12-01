@@ -42,6 +42,7 @@ require_once './registration/util/funcs.php';
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Status</th>
+                <th>View Order Details</th>
             </tr>
         </thead>
         <tbody>
@@ -57,6 +58,7 @@ require_once './registration/util/funcs.php';
                 echo '<td>' . $order['quantity'] . '</td>';
                 echo '<td>' . $order['price'] . '</td>';
                 echo '<td>' . $order['orderStatus'] . '</td>';
+                echo '<td><a class="btn btn-primary" href="viewOrderDetail.php?orderId=' . $order['orderId'] . '">View Order Details</a></td>';
                 echo '</tr>';
             }
             ?>

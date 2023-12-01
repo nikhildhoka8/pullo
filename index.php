@@ -40,7 +40,10 @@ session_start();
    <body class="main-layout">
 	<!-- header section start -->
 	<div class="header_section">
-		<?php require_once 'headerNav.php';?>
+		<?php 
+		require_once 'headerNav.php';
+		require_once 'dbconnect.php';
+		?>
 		<div class="banner_section">
 			<div class="container-fluid">
 				<section class="slide-wrapper">
@@ -56,90 +59,45 @@ session_start();
 
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
-                <div class="carousel-item active">
+				<?php
+				//select top 4 products from the database
+				$stmt = $con->prepare("SELECT * FROM VW_PRODUCT WHERE activeStatus = TRUE LIMIT 4;");
+				$stmt->execute();
+				$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				$i = 1;
+				//print only 4 prodcuts
+				foreach($products as $product){
+					if($i != 1){
+						echo '<div class="carousel-item">';
+					}
+					else{
+						echo '<div class="carousel-item active">';
+					}
+					?>
                     <div class="row">
-					<div class="col-sm-2 padding_0">
-						<p class="mens_taital">Men Shoes</p>
-						<div class="page_no">0/3</div>
-						<p class="mens_taital_2">Men Shoes</p>
-					</div>
-					<div class="col-sm-5">
-						<div class="banner_taital">
-							<h1 class="banner_text">Yeezy 350s </h1>
-							<h1 class="mens_text"><strong>Simply Stellar</strong></h1>
-							<p class="lorem_text">By Adidas Originals</p>
-							<button class="buy_bt" onclick="window.location.href='http://corsair2.cs.iupui.edu/~ndhoka/pullo/shoes.php'">Buy Now</button>
-							<button class="more_bt" onclick = "window.location.href='./shoes.php'">See More</button>
+						<div class="col-sm-2 padding_0">
+							<p class="mens_taital">Men Shoes</p>
+							<div class="page_no"><?php echo $i; ?>/4</div>
+							<p class="mens_taital_2">Men Shoes</p>
+						</div>
+						<div class="col-sm-5">
+							<div class="banner_taital">
+								<h1 class="banner_text"><?php print $product['category'] ?> </h1>
+								<h1 class="mens_text"><strong><?php print $product['productName'] ?></strong></h1>
+								<p class="lorem_text"><?php print $product['productDescription'] ?></p>
+								<button class="buy_bt" onclick="window.location.href='./shoes.php#<?php print $product['category'] ?>'">Buy Now</button>
+								<button class="more_bt" onclick = "window.location.href='./shoes.php'">See More</button>
+							</div>
+						</div>
+						<div class="col-sm-5">
+							<div class="shoes_img"><img src="<?php print $product['productImageURL'] ?>"></div>
 						</div>
 					</div>
-					<div class="col-sm-5">
-						<div class="shoes_img"><img src="images/yeezy-breds.png"></div>
-					</div>
-				</div>
                 </div>
-                <div class="carousel-item">
-                    <div class="row">
-					<div class="col-sm-2 padding_0">
-						<p class="mens_taital">Men Shoes</p>
-						<div class="page_no">1/3</div>
-						<p class="mens_taital_2">Men Shoes</p>
-					</div>
-					<div class="col-sm-5">
-						<div class="banner_taital">
-							<h1 class="banner_text">New Running Shoes </h1>
-							<h1 class="mens_text"><strong>Men's Like Plex</strong></h1>
-							<p class="lorem_text">ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-							<button class="buy_bt">Buy Now</button>
-							<button class="more_bt">See More</button>
-						</div>
-					</div>
-					<div class="col-sm-5">
-						<div class="shoes_img"><img src="images/running-shoes.png"></div>
-					</div>
-				</div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row">
-					<div class="col-sm-2 padding_0">
-						<p class="mens_taital">Men Shoes</p>
-						<div class="page_no">2/3</div>
-						<p class="mens_taital_2">Men Shoes</p>
-					</div>
-					<div class="col-sm-5">
-						<div class="banner_taital">
-							<h1 class="banner_text">New Running Shoes </h1>
-							<h1 class="mens_text"><strong>Men's Like Plex</strong></h1>
-							<p class="lorem_text">ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-							<button class="buy_bt">Buy Now</button>
-							<button class="more_bt">See More</button>
-						</div>
-					</div>
-					<div class="col-sm-5">
-						<div class="shoes_img"><img src="images/running-shoes.png"></div>
-					</div>
-				</div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row">
-					<div class="col-sm-2 padding_0">
-						<p class="mens_taital">Men Shoes</p>
-						<div class="page_no">3/3</div>
-						<p class="mens_taital_2">Men Shoes</p>
-					</div>
-					<div class="col-sm-5">
-						<div class="banner_taital">
-							<h1 class="banner_text">New Running Shoes </h1>
-							<h1 class="mens_text"><strong>Men's Like Plex</strong></h1>
-							<p class="lorem_text">ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-							
-							<button class="more_bt">See More</button>
-						</div>
-					</div>
-					<div class="col-sm-5">
-						<div class="shoes_img"><img src="images/running-shoes.png"></div>
-					</div>
-				</div>
-                </div>
+				<?php
+				$i++;
+				}
+				?>
             </div>
         </div>
     </div>
