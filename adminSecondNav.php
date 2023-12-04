@@ -9,5 +9,6 @@
         <a href="./viewStock.php">Stock</a>
         <a href="./viewSize.php">Size</a>
         <a href="./viewAllOrder.php">Orders</a>
+        <a href="./reports.php">Download Reports</a>
         <a href="./logout.php">Logout</a>
     </div>

@@ -65,7 +65,7 @@ require_once './registration/util/funcs.php';
                     echo '<td>' . $product['category'] . '</td>';
                     echo '<td>$' . $product['price'] . '</td>';
                     echo '<td>' . $product['gender'] .  '</td>';
-                    echo '<td><a class="btn btn-primary" href="./addProduct.php?productId=' . $product['productId'] . '">Update</a> <a class="btn btn-primary" href="./deleteProduct.php?productId=' . $product['productId'] . '">Delete</a></td>';
+                    echo '<td><a class="btn btn-primary" href="./updateProduct.php?productId=' . $product['productId'] . '">Update</a> <a class="btn btn-primary" href="./deleteProduct.php?productId=' . $product['productId'] . '">Delete</a></td>';
                     echo '</tr>';
                 }
                 ?>

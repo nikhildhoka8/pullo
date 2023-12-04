@@ -1,0 +1,422 @@
+"# Table: BRAND"
+brandId,brandName,activeStatus
+1,"Adidas Originals",1
+2,Nike,1
+4,"New Balance",1
+5,Puma,1
+6,Gucci,1
+
+"# Table: CART"
+cartId,userId,productId,sizeId,quantity
+15,7,37,3,1
+
+"# Table: CATEGORY"
+categoryId,categoryName,activeStatus
+10,"Jordan 1",1
+11,Yeezy,1
+12,Slides,1
+13,"Foam Runners",1
+14,"Jordan 11",1
+
+"# Table: COUNTRY"
+countryId,country
+1,Afghanistan
+2,Albania
+3,Algeria
+4,Andorra
+5,Angola
+6,"Antigua and Barbuda"
+7,Argentina
+8,Armenia
+9,Australia
+10,Austria
+11,Azerbaijan
+12,Bahamas
+13,Bahrain
+14,Bangladesh
+15,Barbados
+16,Belarus
+17,Belgium
+18,Belize
+19,Benin
+20,Bhutan
+21,Bolivia
+22,"Bosnia and Herzegovina"
+23,Botswana
+24,Brazil
+25,Brunei
+26,Bulgaria
+27,"Burkina Faso"
+28,Burundi
+29,"Cabo Verde"
+30,Cambodia
+31,Cameroon
+32,Canada
+33,"Central African Republic"
+34,Chad
+35,Chile
+36,China
+37,Colombia
+38,Comoros
+39,Congo
+40,"Costa Rica"
+41,Croatia
+42,Cuba
+43,Cyprus
+44,"Czech Republic"
+45,Denmark
+46,Djibouti
+47,Dominica
+48,"Dominican Republic"
+49,"East Timor"
+50,Ecuador
+51,Egypt
+52,"El Salvador"
+53,"Equatorial Guinea"
+54,Eritrea
+55,Estonia
+56,Eswatini
+57,Ethiopia
+58,Fiji
+59,Finland
+60,France
+61,Gabon
+62,Gambia
+63,Georgia
+64,Germany
+65,Ghana
+66,Greece
+67,Grenada
+68,Guatemala
+69,Guinea
+70,Guinea-Bissau
+71,Guyana
+72,Haiti
+73,Honduras
+74,Hungary
+75,Iceland
+76,India
+77,Indonesia
+78,Iran
+79,Iraq
+80,Ireland
+81,Israel
+82,Italy
+83,"Ivory Coast"
+84,Jamaica
+85,Japan
+86,Jordan
+87,Kazakhstan
+88,Kenya
+89,Kiribati
+90,"Korea, North"
+91,"Korea, South"
+92,Kosovo
+93,Kuwait
+94,Kyrgyzstan
+95,Laos
+96,Latvia
+97,Lebanon
+98,Lesotho
+99,Liberia
+100,Libya
+101,Liechtenstein
+102,Lithuania
+103,Luxembourg
+104,Madagascar
+105,Malawi
+106,Malaysia
+107,Maldives
+108,Mali
+109,Malta
+110,"Marshall Islands"
+111,Mauritania
+112,Mauritius
+113,Mexico
+114,Micronesia
+115,Moldova
+116,Monaco
+117,Mongolia
+118,Montenegro
+119,Morocco
+120,Mozambique
+121,Myanmar
+122,Namibia
+123,Nauru
+124,Nepal
+125,Netherlands
+126,"New Zealand"
+127,Nicaragua
+128,Niger
+129,Nigeria
+130,"North Macedonia"
+131,Norway
+132,Oman
+133,Pakistan
+134,Palau
+135,Panama
+136,"Papua New Guinea"
+137,Paraguay
+138,Peru
+139,Philippines
+140,Poland
+141,Portugal
+142,Qatar
+143,Romania
+144,Russia
+145,Rwanda
+146,"Saint Kitts and Nevis"
+147,"Saint Lucia"
+148,"Saint Vincent and the Grenadines"
+149,Samoa
+150,"San Marino"
+151,"Sao Tome and Principe"
+152,"Saudi Arabia"
+153,Senegal
+154,Serbia
+155,Seychelles
+156,"Sierra Leone"
+157,Singapore
+158,Slovakia
+159,Slovenia
+160,"Solomon Islands"
+161,Somalia
+162,"South Africa"
+163,"South Sudan"
+164,Spain
+165,"Sri Lanka"
+166,Sudan
+167,Suriname
+168,Sweden
+169,Switzerland
+170,Syria
+171,Taiwan
+172,Tajikistan
+173,Tanzania
+174,Thailand
+175,Togo
+176,Tonga
+177,"Trinidad and Tobago"
+178,Tunisia
+179,Turkey
+180,Turkmenistan
+181,Tuvalu
+182,Uganda
+183,Ukraine
+184,"United Arab Emirates"
+185,"United Kingdom"
+186,"United States of America"
+187,Uruguay
+188,Uzbekistan
+189,Vanuatu
+190,"Vatican City"
+191,Venezuela
+192,Vietnam
+193,Yemen
+194,Zambia
+195,Zimbabwe
+
+"# Table: DELIVERY_ADDRESS"
+deliveryAddressId,userId,addressLine1,addressLine2,addressLine3,city,pincode,state,countryId,activeStatus
+1,6,"222 N Henry Ave","Apt 1101",,Indianapolis,42102,Indiana,186,0
+2,6,"911 W North St","Apt 730",,Indianapolis,46204,Indiana,186,1
+7,6,"8484 New York St","Apt 5167",,"New York City",46216,"New York",186,1
+8,111,"7654 Michigan Ave","Apt 658",,Indianapolis,46203,Indiana,186,1
+9,111,"6523 New York St","Apt 789",,Dallas,11001,Texas,186,0
+10,112,"654 New York St","Apt 6542",,NYC,65242,"New York",186,1
+11,112,"732 Michigan Ave","Apt 654",,"New York City",72621,"New York",186,0
+12,113,"2367 N St","apt 141",,Indy,12112,Indiana,186,1
+
+"# Table: GENDER"
+genderId,genderName
+1,Male
+2,Female
+3,Unisex
+
+"# Table: ORDER_TABLE"
+orderId,userId,productId,sizeId,quantity,deliveryAddressId,billingAddressId,statusId,orderDate,shipDate,deliveryDate,paymentDetailId
+4,6,33,4,1,1,1,3,2023-11-13,2023-11-24,2023-11-24,4
+5,112,39,4,1,10,10,1,2023-11-13,,,5
+6,6,37,2,1,2,2,1,2023-11-24,,,6
+7,6,39,4,1,2,2,1,2023-11-24,,,6
+8,113,37,3,1,12,12,4,2023-12-02,2023-12-02,2023-12-02,7
+
+"# Table: PAYMENT_DETAIL"
+paymentDetailId,paymentMethodId,paymentStatusId,paymentDate,amount
+4,1,1,2023-11-13,500
+5,1,1,2023-11-13,389
+6,2,1,2023-11-24,639
+7,1,1,2023-12-02,250
+
+"# Table: PAYMENT_METHOD"
+paymentMethodId,paymentMethod,activeStatus
+1,"Credit Card",1
+2,"Debit Card",1
+3,Paypal,1
+
+"# Table: PAYMENT_STATUS"
+paymentStatusId,paymentStatus
+1,"Payment Successful"
+2,"Payment Unsuccessful
+"
+
+"# Table: PRODUCT"
+productId,categoryId,brandId,productName,productDescription,productImageURL,price,genderId,activeStatus
+33,10,2,"Jordan 1 Dior","By Dior",images/product_33.png,500,3,1
+34,12,1,"Slides Pure","By Kanye West",images/product_34.jpg,150,1,1
+35,11,1,"Yeezy 350 Mono Ice","By Adidas Originals",images/product_35.jpg,320,3,1
+36,13,1,"Foam Runner Onyx","By Adidas Originals",images/product_36.jpg,160,3,1
+37,10,2,"Jordan 1 Lost and Found","By Air Jordan",images/product_37.jpg,250,3,1
+38,10,2,"Air Jordan 1 Retro High Shadow 2.0","By Air Jordan",images/product_38.png,180,1,1
+39,10,2,"Air Jordan 1 Retro High OG Patent Bred","By Air Jordan",images/product_39.jpeg,389,1,1
+40,14,2,"Jordan 11 Retro Cherry","By Air Jordan",images/product_40.png,450,3,1
+41,11,1,"Yeezy 350 v2 Carbon Beluga","By Adidas Originals",images/product_41.jpeg,215,1,1
+
+"# Table: SIZE"
+sizeId,size,activeStatus
+1,6,1
+2,7,1
+3,8,1
+4,9,1
+5,10,1
+6,11,1
+
+"# Table: STATUS"
+statusId,status
+1,Received
+2,Packaging
+3,Shipping
+4,Delivered
+
+"# Table: STOCK"
+stockId,productId,sizeId,quantity
+2,33,1,6
+3,33,4,9
+4,34,3,4
+5,34,2,6
+6,35,4,8
+7,36,4,3
+8,36,2,12
+9,37,2,0
+10,38,4,2
+11,39,4,3
+12,40,3,13
+13,35,2,12
+14,37,3,9
+
+"# Table: USER_TABLE"
+userId,userTypeId,fName,lName,phoneNumber,email,password,dateOfBirth,activeStatus
+6,1,Nikhil,Dhoka,6462296261,ndhoka@iu.edu,Hellonikhil1234@,2023-10-06,1
+7,2,Admin,Salata,5642871234,admin@iupui.edu,Helloadmin1234@,2019-03-01,1
+8,2,Henry,Smith,3473432122,henry@iu.edu,Helloadam1234,2023-02-07,1
+9,1,"John Adam",Smith,1231231236,john@iu.edu,Hellojohn1234,2023-08-02,0
+10,2,"Joe Henry",Lu,2523723422,joe@iu.edu,Hellojoe1234@,2023-10-02,1
+11,1,zeythpwsnb,Smith,9290782124,nabydmlpsi@example.com,gmknXWDSAU,1953-11-04,0
+12,1,nwhfzgjvrp,Smith,9518115138,ijdqsacumr@example.com,n6PLZsOrKY,1988-11-04,1
+13,1,gmztflvarj,Smith,9140893271,imwcvfebdu@example.com,S6XVHxJ8RW,2005-11-04,1
+14,1,dkehbnylir,Smith,9305992133,jnudhmczwk@example.com,s4l5dFkDtP,1984-11-04,1
+15,1,zdmbuajxck,Smith,9802118013,wvjunatlcf@example.com,ctvpnYZ6CG,1969-11-04,1
+16,1,irtqmnspxd,Smith,9514229868,yxqbedhmtf@example.com,5tif2hozc6,1994-11-04,1
+17,2,vqpudfwbro,Smith,9524397481,beojmxugpn@example.com,8yfDvzIrJZ,2003-11-04,1
+18,1,slzoijkndy,Smith,9188011445,jstnefhpio@example.com,LgtejVhZor,2002-11-04,1
+19,1,gvcjmeyrla,Smith,9798840198,vexqtcdmkh@example.com,NZmS8I3hQY,1999-11-04,1
+20,1,yuxwzsemvd,Smith,9465022317,fmvjxczdug@example.com,d2N9mg6OTz,1999-11-04,1
+21,1,vtueqpaihf,Smith,9807590896,ebspnywdoq@example.com,2CMfuOQJ7t,1970-11-04,1
+22,1,rwigacmlkn,Smith,9571011885,hoivpuagyf@example.com,imqHbXVAOG,1991-11-04,1
+23,2,verdqigtsh,Smith,9115646882,wzerhfyodu@example.com,dtKmJWgTIk,1987-11-04,1
+24,1,onefkwshra,Smith,9279336719,tnrvzmqadc@example.com,7asvMlDBXL,2002-11-04,1
+25,1,qbnikugxrt,Smith,9013716861,tsoxhvzjnc@example.com,m3WC7RbM4n,1987-11-04,1
+26,1,lbehtnavcu,Smith,9114320479,bsxnwpfyau@example.com,BKmsMqPOxR,2004-11-04,1
+27,1,asmewrcnld,Smith,9218775410,egjpunxqhm@example.com,PgJLyu6Fdb,1988-11-04,1
+28,1,mdcxbqwoul,Smith,9882839642,wlhpikefgd@example.com,kPe4jqIKYO,1999-11-04,1
+29,1,qyuezalmgp,Smith,9080272530,mrzuxcygwn@example.com,59oy3HFAwJ,1975-11-04,1
+30,1,rdubkjzwqs,Smith,9214702338,nbucwgvlpr@example.com,GtpOZV3hAo,1972-11-04,1
+31,1,doiubynrlm,Smith,9420284779,myoecrbxhd@example.com,71E6xkIztU,1996-11-04,1
+32,1,uvwectplsa,Smith,9991536320,wjgmkpxdez@example.com,QhlmMeUbz5,1980-11-04,1
+33,1,thmxncqdwf,Smith,9012583334,qmvkphbfos@example.com,djzcRChpDM,1989-11-04,1
+34,1,zikhmlxuws,Smith,9982826133,njebsthfvw@example.com,Fpzr6kbY9Z,1989-11-04,1
+35,1,cgdsklowqu,Smith,9627495563,xqfgsureil@example.com,SrwfHWaild,1976-11-04,1
+36,1,cnuivabyod,Smith,9745008781,crkqstydba@example.com,Ot1bgM4s7f,1975-11-04,1
+37,1,irnhkbvuey,Smith,9777139664,duiajcgvrw@example.com,tdsxI0RcNu,2003-11-04,1
+38,1,yagvrncext,Smith,9066679837,qwmylfichz@example.com,kQwyqfXjem,1991-11-04,1
+39,1,iwqnoxudpv,Smith,9427373216,xrtmgqpdnc@example.com,fpZmyOidJ8,1990-11-04,1
+40,2,idwopbcalm,Smith,9042694788,jnhwufocym@example.com,Miv58TctdG,1995-11-04,1
+41,1,bqurtfepwx,Smith,9008180677,ifbrxklnua@example.com,ITvlOZoLHJ,1984-11-04,1
+42,1,zpgkociesm,Smith,9281010382,ptzeyucwri@example.com,kVxryLPXUi,1969-11-04,1
+43,1,aieotmcksf,Smith,9851213704,qutcohrkzw@example.com,96i58AWtgm,1983-11-04,1
+44,1,deznysjmxt,Smith,9545006812,juwpaxbokr@example.com,M9Ok3eiuLy,1972-11-04,1
+45,1,ghynukwcae,Smith,9146798994,murnjayhcp@example.com,6aAeufpcGW,1990-11-04,1
+46,1,fbdolrtpvq,Smith,9599466389,ehxpynqjtb@example.com,usWDRl3PEr,1994-11-04,1
+47,1,ptabynsiuv,Smith,9104559085,kqtzgmvjdb@example.com,UBXmrwvI4k,1981-11-04,1
+48,1,oetbkruimx,Smith,9593002443,qwyegknabs@example.com,YLpQzG68fB,1976-11-04,1
+49,1,swhqezptxg,Smith,9543672827,cpifnajobs@example.com,qQ9ruxhVYG,1972-11-04,1
+50,1,tumacefolp,Smith,9495260126,cemyhfalkt@example.com,rPxfX07B8F,2000-11-04,1
+51,1,hxkqovcpgz,Smith,9988516289,xnzseofhkg@example.com,5OZLih4nsp,1977-11-04,1
+52,1,mepofjidht,Smith,9885331316,alfygbnkrz@example.com,aBhQ012Ogf,1957-11-04,1
+53,1,pultdckorm,Smith,9123034420,uoeajgslbz@example.com,TNsz6mBHLS,1957-11-04,1
+54,1,adrozjneus,Smith,9353575592,eyptfzmkag@example.com,jRwXeyrotC,1973-11-04,1
+55,1,zdtmophqgr,Smith,9253171868,xqwsybazng@example.com,UasvBNr6nb,1964-11-04,1
+56,1,zpfnxgtiyo,Smith,9465069836,rlumakybwf@example.com,ajer8TsPUn,1982-11-04,1
+57,1,isxpugvrfh,Smith,9216990889,bqxfigmoyd@example.com,29qImtvF6k,2002-11-04,1
+58,1,vjnwpsfbux,Smith,9165985649,iyxhstckwb@example.com,0fYzV8uqLr,1995-11-04,1
+59,1,mceusrjxow,Smith,9077237266,ynvxrdgwoa@example.com,MzWDHw7Ggs,1953-11-04,1
+60,1,blxnzjasvw,Smith,9573994749,bmxrjcklzf@example.com,vg6HESO1yL,2002-11-04,1
+61,1,pqolkgyitv,Smith,9564737459,emyufhbjno@example.com,yPuqE3toZv,1984-11-04,1
+62,1,njyqvwefcs,Smith,9245574341,nkdrzwmcef@example.com,RX5EgDvCh8,1962-11-04,1
+63,1,tmpvhlfyue,Smith,9294433382,nbjhtvzokg@example.com,CorLWDldhc,1990-11-04,1
+64,1,epurvfnydq,Smith,9453314802,jwuizgphvf@example.com,UISqkh8JZ4,2003-11-04,1
+65,1,dquyizospa,Smith,9659983435,fpsmkhcoda@example.com,2bGwWIkFpE,1990-11-04,1
+66,1,oysfzqpdua,Smith,9465960480,pykdgzvaft@example.com,WQMmj96FaR,1986-11-04,1
+67,1,bdriehgxsc,Smith,9394182415,vbshmqafod@example.com,wkZHobJ36s,1971-11-04,1
+68,1,nexkvidwpj,Smith,9195045901,wjruvshbpm@example.com,7fn4z8PxmX,1984-11-04,1
+69,1,uyltprqfjm,Smith,9676344806,pxavynetor@example.com,SWAn7tUYF5,1999-11-04,1
+70,1,puzvehacbi,Smith,9275134192,uitnslwpjd@example.com,5p8KuPVvg7,1980-11-04,1
+71,1,mplrqsdktc,Smith,9891332067,jkobyfzmvl@example.com,DRz7l096wO,1974-11-04,1
+72,1,mgharqsblx,Smith,9369742145,mnzsrglxud@example.com,zYRcBToZfk,1983-11-04,1
+73,1,npevjqxgml,Smith,9987547630,lqyakvzrnb@example.com,QZrcwh49MT,1961-11-04,1
+74,1,ycagvkdxsi,Smith,9547191314,ifnbwzjhsr@example.com,IaKDgs0VUM,1990-11-04,1
+75,1,sokgfxeynl,Smith,9700016150,udxgbrsimc@example.com,fiEpbJoQUX,1981-11-04,1
+76,1,vxoakumyfi,Smith,9042359585,xyzckdowmt@example.com,SehxByzOP5,1990-11-04,1
+77,1,mnhvzclsyk,Smith,9614128770,oypbaftcer@example.com,lKGH4m6d7x,1988-11-04,1
+78,1,ylweujodxr,Smith,9951264694,xnvhgzbmis@example.com,n3mgiKURvN,1982-11-04,1
+79,1,jdspzuekci,Smith,9660830438,vkrgibjeao@example.com,eUEKbnVDAH,1958-11-04,1
+80,1,vjdfphumaz,Smith,9413340826,rqgxospdju@example.com,ZJUctbVgrM,1976-11-04,1
+81,1,cormszuqdb,Smith,9124701965,hoiluwfycj@example.com,VsWwZejBUo,1992-11-04,1
+82,1,vyoteuwxhz,Smith,9132453781,qgbfdscrmu@example.com,CEcBSAdbp9,2005-11-04,1
+83,1,bnjfxcpavo,Smith,9491883708,pnrwtuvybl@example.com,RfAuScK5gL,1989-11-04,1
+84,1,ypjnaouqlt,Smith,9883252649,majywnobqk@example.com,6d4giprZvC,1965-11-04,1
+85,1,tzqlawnpmk,Smith,9351947390,uqfncjwtgv@example.com,tB3kJj1DUq,1988-11-04,1
+86,1,ruhbmpvlai,Smith,9347093616,kworlhtpmb@example.com,8l4pxR2MaE,1972-11-04,1
+87,1,wmtgnfljcp,Smith,9337457143,juahmxqkgp@example.com,rO1smlYf5z,1962-11-04,1
+88,1,dqogykwfbu,Smith,9772206698,onqmkrdwzx@example.com,1YewDslRZK,1988-11-04,1
+89,1,mtqzfgvcle,Smith,9729679201,fdyhkbiteg@example.com,gXdWt8T3Aa,1981-11-04,1
+90,1,sejfbgvnla,Smith,9187426560,hgwboeritu@example.com,sxNbfWUmqz,1981-11-04,1
+91,1,kqwbzrepht,Smith,9639001437,uwltcgpjmk@example.com,FEzyI5eDH8,1966-11-04,1
+92,1,qpmwaknfis,Smith,9972172689,ipdsukejom@example.com,PHEIZS7A6W,1997-11-04,1
+93,1,thfmraedyk,Smith,9390874367,vyahcpxokb@example.com,Rs1YGHQPNF,1957-11-04,1
+94,1,paybiwdqju,Smith,9715234477,dntmlbiahc@example.com,tyXj1r9mJs,1953-11-04,1
+95,1,niguzykjca,Smith,9536474173,rgpkydlxvu@example.com,nqfWvkP2ti,1997-11-04,1
+96,1,rgifzcyulm,Smith,9614447992,jdhgfsnbzw@example.com,CDyUwKEcrT,1965-11-04,1
+97,1,yfbluwrdva,Smith,9827933584,kwzmhuvijt@example.com,G60crgCbYw,1995-11-04,1
+98,1,ujxlrentgb,Smith,9170688699,bpcqhmfvty@example.com,Od6cinBs5Z,1961-11-04,1
+99,1,evshnjyakq,Smith,9559646444,hwfmxdgoli@example.com,jmczng6K2E,1982-11-04,1
+100,1,mejtlpihzx,Smith,9916388693,dpwqjbvcxk@example.com,FMNHjbweRd,1997-11-04,1
+101,1,sjxmktiudr,Smith,9932077552,smrobypfzu@example.com,34vEpLowaB,1976-11-04,1
+102,1,zkprbmtwls,Smith,9290604935,huxkgiwndz@example.com,c6tyO2S307,1998-11-04,1
+103,1,ycazgmrdxf,Smith,9621139598,binszvutyk@example.com,Mvyu87SRVG,1979-11-04,1
+104,1,akjvrgzdoc,Smith,9207573451,pbeawjzigc@example.com,S389CDHwto,1987-11-04,1
+105,1,zihybskjpu,Smith,9323955613,humgtejcpy@example.com,H0xw46mvrO,1998-11-04,1
+106,1,qwkhxgrdon,Smith,9565970779,rqfwlvuhep@example.com,7fxQM9jvlo,2003-11-04,1
+107,1,oieagcuvwy,Smith,9404183313,vpmdchxtwi@example.com,PF2kV7rSnE,1984-11-04,1
+108,1,ksiwgauqep,Smith,9568372696,vkibsoyagm@example.com,FSJ0Hf2nj4,1970-11-04,1
+109,1,purdstimfk,Smith,9031769635,qyhbgxizfd@example.com,Wegm0fJPBw,1960-11-04,1
+110,1,cwnqpyroat,Smith,9630361552,gipcwufsoz@example.com,9h08zfT7mQ,1993-11-04,1
+111,1,Maya,Ren,1231237812,maya@iu.edu,Mayaren1234@,2022-12-07,1
+112,1,Yash,Rene,1311231231,yash@iupui.edu,Yashren1234@,2023-10-05,1
+113,1,Sanjali,Kherde,9195250401,sanjali@iu.edu,Hellosanjali1234,2018-10-02,1
+
+"# Table: USER_TYPE"
+userTypeId,userType
+1,Customer
+2,Admin
+

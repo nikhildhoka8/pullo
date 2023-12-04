@@ -1,0 +1,15 @@
+"All Stock"
+productId,category,brand,productName,productDescription,productImageURL,price,gender,activeStatus,size,stockId,stockQuantity
+33,"Jordan 1",Nike,"Jordan 1 Dior","By Dior",images/product_33.png,500,Unisex,1,6,2,6
+33,"Jordan 1",Nike,"Jordan 1 Dior","By Dior",images/product_33.png,500,Unisex,1,9,3,9
+34,Slides,"Adidas Originals","Slides Pure","By Kanye West",images/product_34.jpg,150,Male,1,8,4,4
+34,Slides,"Adidas Originals","Slides Pure","By Kanye West",images/product_34.jpg,150,Male,1,7,5,6
+35,Yeezy,"Adidas Originals","Yeezy 350 Mono Ice","By Adidas Originals",images/product_35.jpg,320,Unisex,1,9,6,8
+35,Yeezy,"Adidas Originals","Yeezy 350 Mono Ice","By Adidas Originals",images/product_35.jpg,320,Unisex,1,7,13,12
+36,"Foam Runners","Adidas Originals","Foam Runner Onyx","By Adidas Originals",images/product_36.jpg,160,Unisex,1,9,7,3
+36,"Foam Runners","Adidas Originals","Foam Runner Onyx","By Adidas Originals",images/product_36.jpg,160,Unisex,1,7,8,12
+37,"Jordan 1",Nike,"Jordan 1 Lost and Found","By Air Jordan",images/product_37.jpg,250,Unisex,1,7,9,0
+37,"Jordan 1",Nike,"Jordan 1 Lost and Found","By Air Jordan",images/product_37.jpg,250,Unisex,1,8,14,9
+38,"Jordan 1",Nike,"Air Jordan 1 Retro High Shadow 2.0","By Air Jordan",images/product_38.png,180,Male,1,9,10,2
+39,"Jordan 1",Nike,"Air Jordan 1 Retro High OG Patent Bred","By Air Jordan",images/product_39.jpeg,389,Male,1,9,11,3
+40,"Jordan 11",Nike,"Jordan 11 Retro Cherry","By Air Jordan",images/product_40.png,450,Unisex,1,8,12,13

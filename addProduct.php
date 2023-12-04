@@ -167,12 +167,12 @@ session_start();
                     <?php
                     $stmtGender = $con->prepare("SELECT * FROM GENDER");
                     $stmtGender->execute();
-                    while($gender = $stmtGender->fetch(PDO::FETCH_ASSOC)){
-                        if($gender['genderId'] == $gender){
-                            echo "<option value =' " .$gender['genderId'] . " ' selected>" .$gender['genderName'] . "</option>";
+                    while($rowGender = $stmtGender->fetch(PDO::FETCH_ASSOC)){
+                        if($rowGender['genderId'] == $gender){
+                            echo "<option value =' " .$rowGender['genderId'] . " ' selected>" .$rowGender['genderName'] . "</option>";
                         }
                         else{
-                            echo "<option value =' " .$gender['genderId'] . " '>" .$gender['genderName'] . "</option>";
+                            echo "<option value =' " .$rowGender['genderId'] . " '>" .$rowGender['genderName'] . "</option>";
                         }
                     }
                     ?>
