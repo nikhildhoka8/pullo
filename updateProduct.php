@@ -34,103 +34,119 @@ require_once './registration/util/funcs.php';
             $brandName = $product['brand'];
             $categoryName = $product['category'];
             $gender = $product['gender'];
-
         } else {
             header('Location: error.php?message=Invalid Access');
             exit();
         }
     }
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // check for all the entries and then update the database
+        $productId = $_POST['productId'];
         if (isset($_POST['productName']) && !empty($_POST['productName'])) {
             $productName = $_POST['productName'];
             $productNameOK = true;
         } else {
             $message .= "Product Name is required.<br>";
         }
+
         if (isset($_POST['productDescription']) && !empty($_POST['productDescription'])) {
             $productDescription = $_POST['productDescription'];
             $productDescriptionOK = true;
         } else {
             $message .= "Product Description is required.<br>";
         }
+
         if (isset($_POST['price']) && !empty($_POST['price'])) {
-            $price = $_POST['price'];
-            $priceOK = true;
-        } 
-        else {
-            $message .= "Price is required.<br>";
-        }
-        if($_POST['price'] < 0){
-            $message .= "Price must be a positive number <br>";
-        }
-        else{  
             $price = htmlspecialchars($_POST['price']);
             $priceOK = true;
+        } else {
+            $message .= "Price is required.<br>";
         }
-        
-        if(isset($_POST['productImageUpdate']) && $_POST['productImageUpdate'] == 'yes'){
+
+        if ($_POST['price'] < 0) {
+            $message .= "Price must be a positive number <br>";
+        }
+
+        if (isset($_POST['productImageUpdate']) && $_POST['productImageUpdate'] == 'yes') {
             if (isset($_FILES['productImageURL']) && !empty($_FILES['productImageURL'])) {
-                $productImageURL = $_FILES['productImageURL'];
-                $productImageURLOK = true;
+                // Validate and sanitize the file input
+                $productImageURL = move_uploaded_file($_FILES['productImageURL']['tmp_name'], './images/' . $_FILES['productImageURL']['name']);
+                if ($productImageURL !== false) {
+                    $productImageURLOK = true;
+                } else {
+                    $message .= "Invalid image file format or size. Please upload a valid image file.<br>";
+                }
             } else {
                 $message .= "Product Image is required.<br>";
             }
-        }
-        else if(isset($_POST['productImageUpdate']) && $_POST['productImageUpdate'] == 'no'){
+        } else if (isset($_POST['productImageUpdate']) && $_POST['productImageUpdate'] == 'no') {
             $productImageURLOK = true;
         }
+
         if (isset($_POST['brandName']) && !empty($_POST['brandName'])) {
             $brandName = $_POST['brandName'];
             $brandNameOK = true;
         } else {
             $message .= "Brand Name is required.<br>";
         }
-        if(isset($_POST['categoryName']) && !empty($_POST['categoryName'])){
+
+        if (isset($_POST['categoryName']) && !empty($_POST['categoryName'])) {
             $categoryName = $_POST['categoryName'];
             $categoryNameOK = true;
-        }else{
+        } else {
             $message .= "Category Name is required.<br>";
         }
-        if(isset($_POST['gender']) && !empty($_POST['gender'])){
+
+        if (isset($_POST['gender']) && !empty($_POST['gender'])) {
             $gender = $_POST['gender'];
             $genderOK = true;
-        }else{
+        } else {
             $message .= "Gender is required.<br>";
         }
-        if($productNameOK && $productDescriptionOK && $priceOK && $brandNameOK && $categoryNameOK && $genderOK && $productImageURLOK){
+
+        if ($productNameOK && $productDescriptionOK && $priceOK && $brandNameOK && $categoryNameOK && $genderOK && $productImageURLOK) {
             // update the product in the database
-            if(isset($_FILES['productImageURL']) && !empty($_FILES['productImageURL'])){
-                //delete the old image in "./images" and then upload the new image
-                if (unlink($productImageURL)) {
-                    echo 'File deleted successfully.';
-                } else {
-                    echo 'Error deleting file.';
-                }
+            //print all the data and exit the script 
+            // print_r($_POST);
+            $data = array($productName, $productDescription, $price, $gender, $brandName, $categoryName, $productId);
+            $stmtUpdateProduct = $con->prepare("UPDATE PRODUCT SET productName = ?, productDescription = ?, price = ?, genderId = ?, brandId = ?, categoryId = ? WHERE productId = ?");
+            $stmtUpdateProduct->execute($data);
 
+            // print the query with all the params
+            // $query = $stmtUpdateProduct->queryString;
+            // $params = $stmtUpdateProduct->debugDumpParams();
+            // print $query;
+            // print $params;
+            // exit();
+            if ($stmtUpdateProduct->execute()) {
+                Header('Location: viewProducts.php?message=Product Updated Successfully');
+                exit(); // Important: terminate the script after redirection
+            } else {
+                $message .= "Error updating product. Please try again.<br>";
             }
-
         }
     }
-    if(!empty($message)){
-       include './registration/errormsg.php';
+
+    if (!empty($message)) {
+        include './registration/errormsg.php';
     }
     ?>
     <div class="form-container">
-        <form action="updateProduct.php" method="POST">
+        <form action="updateProduct.php" method="POST" enctype="multipart/form-data">
             <h2>Update Product</h2>
-            
+            <input type="hidden" name="productId" value="<?php echo $productId ?>">
             <div class="input-box">
                 <label for="productName">Product Name: (*REQUIRED)</label><br>
-                <input type="text" name="productName" value="<?php echo $productName?>"><br>
+                <input type="text" name="productName" value="<?php echo $productName ?>"><br>
             </div>
             <div class="input-box">
                 <label for="productDescription">Product Description: (*REQUIRED)</label><br>
-                <input type="text" name="productDescription" value="<?php echo $productDescription?>"><br>
+                <input type="text" name="productDescription" value="<?php echo $productDescription ?>"><br>
             </div>
             <div class="input-box">
                 <label for="price">Product Price: (*REQUIRED)</label><br>
-                <input type="number" name="price" value="<?php echo $price?>"><br>
+                <input type="number" name="price" value="<?php echo $price ?>"><br>
             </div>
 
             <div class="input-box">
@@ -149,7 +165,7 @@ require_once './registration/util/funcs.php';
             </script>
             <div class="input-box" id="productImage" hidden>
                 <label for="productImageURL">Enter a New Image</label><br>
-                <input type="file" name="productImageURL" value="" id="productImageURL" hidden><br>
+                <input type="file" name="productImageURL" id="productImageURL" hidden><br>
             </div>
             <div class="input-box">
                 <label for="brandName">Product Brand: (*REQUIRED)</label><br>
@@ -158,10 +174,10 @@ require_once './registration/util/funcs.php';
                     <?php
                     $stmtBrand = $con->prepare("SELECT * FROM BRAND");
                     $stmtBrand->execute();
-                    while($brand = $stmtBrand->fetch(PDO::FETCH_ASSOC)){
-                        if($brand['brandName'] == $brandName){
+                    while ($brand = $stmtBrand->fetch(PDO::FETCH_ASSOC)) {
+                        if ($brand['brandName'] == $brandName) {
                             echo "<option value='" . $brand['brandId'] . "' selected>" . $brand['brandName'] . "</option>";
-                        }else{
+                        } else {
                             echo "<option value='" . $brand['brandId'] . "'>" . $brand['brandName'] . "</option>";
                         }
                     }
@@ -175,16 +191,14 @@ require_once './registration/util/funcs.php';
                     <?php
                     $stmtGender = $con->prepare("SELECT * FROM GENDER");
                     $stmtGender->execute();
-                    while($rowGender = $stmtGender->fetch(PDO::FETCH_ASSOC)){
-                        if($rowGender['genderName'] == $gender){
-                            echo "<option value =' " .$rowGender['genderId'] . " ' selected>" .$rowGender['genderName'] . "</option>";
-                        }
-                        else{
-                            echo "<option value =' " .$rowGender['genderId'] . " '>" .$rowGender['genderName'] . "</option>";
+                    while ($rowGender = $stmtGender->fetch(PDO::FETCH_ASSOC)) {
+                        if ($rowGender['genderName'] == $gender) {
+                            echo "<option value =' " . $rowGender['genderId'] . " ' selected>" . $rowGender['genderName'] . "</option>";
+                        } else {
+                            echo "<option value =' " . $rowGender['genderId'] . " '>" . $rowGender['genderName'] . "</option>";
                         }
                     }
                     ?>
-
                 </select>
             </div>
             <div class="input-box">
@@ -194,10 +208,10 @@ require_once './registration/util/funcs.php';
                     <?php
                     $stmtCategory = $con->prepare("SELECT * FROM CATEGORY");
                     $stmtCategory->execute();
-                    while($category = $stmtCategory->fetch(PDO::FETCH_ASSOC)){
-                        if($category['categoryName'] == $categoryName){
+                    while ($category = $stmtCategory->fetch(PDO::FETCH_ASSOC)) {
+                        if ($category['categoryName'] == $categoryName) {
                             echo "<option value='" . $category['categoryId'] . "' selected>" . $category['categoryName'] . "</option>";
-                        }else{
+                        } else {
                             echo "<option value='" . $category['categoryId'] . "'>" . $category['categoryName'] . "</option>";
                         }
                     }

@@ -5,6 +5,7 @@ brandId,brandName,activeStatus
 4,"New Balance",1
 5,Puma,1
 6,Gucci,1
+7,Dior,1
 
 "# Table: CART"
 cartId,userId,productId,sizeId,quantity
@@ -17,6 +18,7 @@ categoryId,categoryName,activeStatus
 12,Slides,1
 13,"Foam Runners",1
 14,"Jordan 11",1
+15,"New Balance 550",1
 
 "# Table: COUNTRY"
 countryId,country
@@ -226,6 +228,8 @@ deliveryAddressId,userId,addressLine1,addressLine2,addressLine3,city,pincode,sta
 10,112,"654 New York St","Apt 6542",,NYC,65242,"New York",186,1
 11,112,"732 Michigan Ave","Apt 654",,"New York City",72621,"New York",186,0
 12,113,"2367 N St","apt 141",,Indy,12112,Indiana,186,1
+13,114,"7635 New York St","Apt 653",,Indianapolis,23121,Indiana,186,1
+14,114,"762 Michigan Ave","apt 7625",,Indianapolis,25261,Indiana,186,0
 
 "# Table: GENDER"
 genderId,genderName
@@ -240,6 +244,8 @@ orderId,userId,productId,sizeId,quantity,deliveryAddressId,billingAddressId,stat
 6,6,37,2,1,2,2,1,2023-11-24,,,6
 7,6,39,4,1,2,2,1,2023-11-24,,,6
 8,113,37,3,1,12,12,4,2023-12-02,2023-12-02,2023-12-02,7
+9,114,35,4,1,13,13,4,2023-12-03,2023-12-03,2023-12-03,8
+10,114,33,1,1,13,13,1,2023-12-03,,,9
 
 "# Table: PAYMENT_DETAIL"
 paymentDetailId,paymentMethodId,paymentStatusId,paymentDate,amount
@@ -247,6 +253,8 @@ paymentDetailId,paymentMethodId,paymentStatusId,paymentDate,amount
 5,1,1,2023-11-13,389
 6,2,1,2023-11-24,639
 7,1,1,2023-12-02,250
+8,3,1,2023-12-03,320
+9,3,1,2023-12-03,500
 
 "# Table: PAYMENT_METHOD"
 paymentMethodId,paymentMethod,activeStatus
@@ -265,12 +273,13 @@ productId,categoryId,brandId,productName,productDescription,productImageURL,pric
 33,10,2,"Jordan 1 Dior","By Dior",images/product_33.png,500,3,1
 34,12,1,"Slides Pure","By Kanye West",images/product_34.jpg,150,1,1
 35,11,1,"Yeezy 350 Mono Ice","By Adidas Originals",images/product_35.jpg,320,3,1
-36,13,1,"Foam Runner Onyx","By Adidas Originals",images/product_36.jpg,160,3,1
+36,13,1,"Foam Runner Onyx","By Adidas Originals",images/product_36.jpg,180,3,1
 37,10,2,"Jordan 1 Lost and Found","By Air Jordan",images/product_37.jpg,250,3,1
-38,10,2,"Air Jordan 1 Retro High Shadow 2.0","By Air Jordan",images/product_38.png,180,1,1
-39,10,2,"Air Jordan 1 Retro High OG Patent Bred","By Air Jordan",images/product_39.jpeg,389,1,1
+38,10,2,"Air Jordan 1 Retro High Shadow 2.0","By Air Jordan",images/product_38.png,180,1,0
+39,10,2,"Air Jordan 1 Retro High OG Patent Bred","By Air Jordan",images/product_39.jpeg,345,1,1
 40,14,2,"Jordan 11 Retro Cherry","By Air Jordan",images/product_40.png,450,3,1
 41,11,1,"Yeezy 350 v2 Carbon Beluga","By Adidas Originals",images/product_41.jpeg,215,1,1
+42,15,4,"New Balance 550 White Green","By NB",images/product_42.jpeg,357,3,1
 
 "# Table: SIZE"
 sizeId,size,activeStatus
@@ -280,6 +289,7 @@ sizeId,size,activeStatus
 4,9,1
 5,10,1
 6,11,1
+8,12,1
 
 "# Table: STATUS"
 statusId,status
@@ -290,12 +300,12 @@ statusId,status
 
 "# Table: STOCK"
 stockId,productId,sizeId,quantity
-2,33,1,6
+2,33,1,5
 3,33,4,9
 4,34,3,4
 5,34,2,6
-6,35,4,8
-7,36,4,3
+6,35,4,7
+7,36,4,2
 8,36,2,12
 9,37,2,0
 10,38,4,2
@@ -303,23 +313,24 @@ stockId,productId,sizeId,quantity
 12,40,3,13
 13,35,2,12
 14,37,3,9
+15,42,5,10
 
 "# Table: USER_TABLE"
 userId,userTypeId,fName,lName,phoneNumber,email,password,dateOfBirth,activeStatus
 6,1,Nikhil,Dhoka,6462296261,ndhoka@iu.edu,Hellonikhil1234@,2023-10-06,1
-7,2,Admin,Salata,5642871234,admin@iupui.edu,Helloadmin1234@,2019-03-01,1
+7,2,Admin,Salata,5642871223,admin@iupui.edu,Adminsalata1234@,2019-03-01,1
 8,2,Henry,Smith,3473432122,henry@iu.edu,Helloadam1234,2023-02-07,1
 9,1,"John Adam",Smith,1231231236,john@iu.edu,Hellojohn1234,2023-08-02,0
 10,2,"Joe Henry",Lu,2523723422,joe@iu.edu,Hellojoe1234@,2023-10-02,1
 11,1,zeythpwsnb,Smith,9290782124,nabydmlpsi@example.com,gmknXWDSAU,1953-11-04,0
 12,1,nwhfzgjvrp,Smith,9518115138,ijdqsacumr@example.com,n6PLZsOrKY,1988-11-04,1
 13,1,gmztflvarj,Smith,9140893271,imwcvfebdu@example.com,S6XVHxJ8RW,2005-11-04,1
-14,1,dkehbnylir,Smith,9305992133,jnudhmczwk@example.com,s4l5dFkDtP,1984-11-04,1
+14,1,dkehbnylir,Smith,9305992133,jnudhmczwk@example.com,s4l5dFkDtP,1984-11-04,0
 15,1,zdmbuajxck,Smith,9802118013,wvjunatlcf@example.com,ctvpnYZ6CG,1969-11-04,1
 16,1,irtqmnspxd,Smith,9514229868,yxqbedhmtf@example.com,5tif2hozc6,1994-11-04,1
 17,2,vqpudfwbro,Smith,9524397481,beojmxugpn@example.com,8yfDvzIrJZ,2003-11-04,1
 18,1,slzoijkndy,Smith,9188011445,jstnefhpio@example.com,LgtejVhZor,2002-11-04,1
-19,1,gvcjmeyrla,Smith,9798840198,vexqtcdmkh@example.com,NZmS8I3hQY,1999-11-04,1
+19,2,gvcjmeyrla,Smith,9798840198,vexqtcdmkh@example.com,NZmS8I3hQY,1999-11-04,1
 20,1,yuxwzsemvd,Smith,9465022317,fmvjxczdug@example.com,d2N9mg6OTz,1999-11-04,1
 21,1,vtueqpaihf,Smith,9807590896,ebspnywdoq@example.com,2CMfuOQJ7t,1970-11-04,1
 22,1,rwigacmlkn,Smith,9571011885,hoivpuagyf@example.com,imqHbXVAOG,1991-11-04,1
@@ -414,6 +425,7 @@ userId,userTypeId,fName,lName,phoneNumber,email,password,dateOfBirth,activeStatu
 111,1,Maya,Ren,1231237812,maya@iu.edu,Mayaren1234@,2022-12-07,1
 112,1,Yash,Rene,1311231231,yash@iupui.edu,Yashren1234@,2023-10-05,1
 113,1,Sanjali,Kherde,9195250401,sanjali@iu.edu,Hellosanjali1234,2018-10-02,1
+114,1,Adam,Kitch,1216211228,adam@iu.edu,Adamkitch1234@,2023-08-03,1
 
 "# Table: USER_TYPE"
 userTypeId,userType

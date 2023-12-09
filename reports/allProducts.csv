@@ -1,11 +1,12 @@
 "All Products"
 productId,productName,productImageURL,productDescription,activeStatus,brand,category,price,gender
-33,"Jordan 1 Dior",images/product_33.png,"By Dior",1,Nike,"Jordan 1",500,Unisex
 34,"Slides Pure",images/product_34.jpg,"By Kanye West",1,"Adidas Originals",Slides,150,Male
-35,"Yeezy 350 Mono Ice",images/product_35.jpg,"By Adidas Originals",1,"Adidas Originals",Yeezy,320,Unisex
-36,"Foam Runner Onyx",images/product_36.jpg,"By Adidas Originals",1,"Adidas Originals","Foam Runners",160,Unisex
-37,"Jordan 1 Lost and Found",images/product_37.jpg,"By Air Jordan",1,Nike,"Jordan 1",250,Unisex
-38,"Air Jordan 1 Retro High Shadow 2.0",images/product_38.png,"By Air Jordan",1,Nike,"Jordan 1",180,Male
-39,"Air Jordan 1 Retro High OG Patent Bred",images/product_39.jpeg,"By Air Jordan",1,Nike,"Jordan 1",389,Male
-40,"Jordan 11 Retro Cherry",images/product_40.png,"By Air Jordan",1,Nike,"Jordan 11",450,Unisex
+38,"Air Jordan 1 Retro High Shadow 2.0",images/product_38.png,"By Air Jordan",0,Nike,"Jordan 1",180,Male
+39,"Air Jordan 1 Retro High OG Patent Bred",images/product_39.jpeg,"By Air Jordan",1,Nike,"Jordan 1",345,Male
 41,"Yeezy 350 v2 Carbon Beluga",images/product_41.jpeg,"By Adidas Originals",1,"Adidas Originals",Yeezy,215,Male
+33,"Jordan 1 Dior",images/product_33.png,"By Dior",1,Nike,"Jordan 1",500,Unisex
+35,"Yeezy 350 Mono Ice",images/product_35.jpg,"By Adidas Originals",1,"Adidas Originals",Yeezy,320,Unisex
+36,"Foam Runner Onyx",images/product_36.jpg,"By Adidas Originals",1,"Adidas Originals","Foam Runners",180,Unisex
+37,"Jordan 1 Lost and Found",images/product_37.jpg,"By Air Jordan",1,Nike,"Jordan 1",250,Unisex
+40,"Jordan 11 Retro Cherry",images/product_40.png,"By Air Jordan",1,Nike,"Jordan 11",450,Unisex
+42,"New Balance 550 White Green",images/product_42.jpeg,"By NB",1,"New Balance","New Balance 550",357,Unisex

@@ -42,10 +42,10 @@ fclose($fp);
 
 // Download the CSV file
 header('Content-Type: application/octet-stream');
-header('Content-Disposition: attachment; filename=' . basename('allData.csv'));
+header('Content-Disposition: attachment; filename=' . basename('./reports/allData.csv'));
 header('Expires: 0');
 header('Cache-Control: must-revalidate');
 header('Pragma: public');
-header('Content-Length: ' . filesize('allData.csv'));
-readfile('allData.csv');
+header('Content-Length: ' . filesize('./reports/allData.csv'));
+readfile('./reports/allData.csv');
 ?>

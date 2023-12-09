@@ -1,7 +1,8 @@
 "ORDER HISTORY"
 orderId,orderDate,deliveryDate,shipDate,orderStatus,productName,productImageURL,price,productDescription,size,quantity,deliveryAddressId,billingAddressId,paymentDetailId,paymentMethodId,paymentDate,amount,userId,brandName,categoryName,genderName
-7,2023-11-24,,,Received,"Air Jordan 1 Retro High OG Patent Bred",images/product_39.jpeg,389,"By Air Jordan",9,1,2,2,6,2,2023-11-24,639,6,Nike,"Jordan 1",Male
-5,2023-11-13,,,Received,"Air Jordan 1 Retro High OG Patent Bred",images/product_39.jpeg,389,"By Air Jordan",9,1,10,10,5,1,2023-11-13,389,112,Nike,"Jordan 1",Male
-8,2023-12-02,2023-12-02,2023-12-02,Delivered,"Jordan 1 Lost and Found",images/product_37.jpg,250,"By Air Jordan",8,1,12,12,7,1,2023-12-02,250,113,Nike,"Jordan 1",Unisex
-6,2023-11-24,,,Received,"Jordan 1 Lost and Found",images/product_37.jpg,250,"By Air Jordan",7,1,2,2,6,2,2023-11-24,639,6,Nike,"Jordan 1",Unisex
 4,2023-11-13,2023-11-24,2023-11-24,Shipping,"Jordan 1 Dior",images/product_33.png,500,"By Dior",9,1,1,1,4,1,2023-11-13,500,6,Nike,"Jordan 1",Unisex
+5,2023-11-13,,,Received,"Air Jordan 1 Retro High OG Patent Bred",images/product_39.jpeg,345,"By Air Jordan",9,1,10,10,5,1,2023-11-13,389,112,Nike,"Jordan 1",Male
+6,2023-11-24,,,Received,"Jordan 1 Lost and Found",images/product_37.jpg,250,"By Air Jordan",7,1,2,2,6,2,2023-11-24,639,6,Nike,"Jordan 1",Unisex
+7,2023-11-24,,,Received,"Air Jordan 1 Retro High OG Patent Bred",images/product_39.jpeg,345,"By Air Jordan",9,1,2,2,6,2,2023-11-24,639,6,Nike,"Jordan 1",Male
+8,2023-12-02,2023-12-02,2023-12-02,Delivered,"Jordan 1 Lost and Found",images/product_37.jpg,250,"By Air Jordan",8,1,12,12,7,1,2023-12-02,250,113,Nike,"Jordan 1",Unisex
+9,2023-12-03,2023-12-03,2023-12-03,Delivered,"Yeezy 350 Mono Ice",images/product_35.jpg,320,"By Adidas Originals",9,1,13,13,8,3,2023-12-03,320,114,"Adidas Originals",Yeezy,Unisex
