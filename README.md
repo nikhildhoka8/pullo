@@ -65,5 +65,5 @@ To set up a local development environment:
 2. Install dependencies (e.g., PHP, MySQL).
 3. Configure your web server (e.g., Apache, Nginx).
 4. Import the database schema from the provided script.
-5. Adjust the database connection settings in the application configuration files.
+5. Adjust the database connection settings in the `dbconnect.php` file.
 ---
