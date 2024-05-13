@@ -59,12 +59,6 @@ The database schema supports all user activities and ensures efficient data retr
 | `viewOrders.php`   | Admin          | View current orders                                |
 | `editUser.php`     | Admin          | Edit user information                              |
 
-## Implementation and Presentation
-- **Video Presentation Links:**
-  - Part One: `CSCI-N342-Presentation1.mp4`
-  - Part Two: `CSCI-N342-Presentation2.mp4`
-- Both presentations demonstrate the application's functionality and database interactions as outlined in the project documentation.
-
 ## Development Environment
 To set up a local development environment:
 1. Clone the repository.
